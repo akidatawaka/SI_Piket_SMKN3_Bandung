@@ -165,6 +165,7 @@ public class frm_tampil_siswa extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Tampil Data Siswa");
 
+        tbl_siswa.setAutoCreateRowSorter(true);
         tbl_siswa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},

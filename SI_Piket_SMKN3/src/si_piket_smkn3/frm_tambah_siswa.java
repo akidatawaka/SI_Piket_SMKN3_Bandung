@@ -56,7 +56,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         btn_batal = new javax.swing.JButton();
         btn_tambah1 = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -243,16 +243,17 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                         JOptionPane.INFORMATION_MESSAGE);
             }
         }
-        
+        /*
         frm_utama utama = new frm_utama();
         utama.setVisible(true);
         
         //menutup frame tambah siswa
         this.setVisible(false);
-        
-            
-        
-
+        */
+            txt_nis.setText("");
+            txt_nama.setText("");
+            txt_kelas.setText("");
+            txt_jurusan.setSelectedIndex(0);
     }//GEN-LAST:event_btn_tambah1ActionPerformed
 
     private void btn_batalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_batalActionPerformed
