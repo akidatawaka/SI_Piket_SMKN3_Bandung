@@ -25,6 +25,9 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
     String driver, database, user, pass;
     Object tabel;
     
+    String var_kls_2;
+    String jurusan;
+    
     public frm_tambah_siswa() {
         dbsetting = new koneksi();
         driver = dbsetting.SettingPanel("DBDriver");
@@ -51,8 +54,12 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         jLabel5 = new javax.swing.JLabel();
         txt_nis = new javax.swing.JTextField();
         txt_nama = new javax.swing.JTextField();
-        txt_kelas = new javax.swing.JTextField();
         txt_jurusan = new javax.swing.JComboBox();
+        kls_1 = new javax.swing.JComboBox();
+        jLabel6 = new javax.swing.JLabel();
+        kls_2 = new javax.swing.JLabel();
+        kls_3 = new javax.swing.JComboBox();
+        jLabel7 = new javax.swing.JLabel();
         btn_batal = new javax.swing.JButton();
         btn_tambah1 = new javax.swing.JButton();
 
@@ -77,7 +84,22 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
 
         jLabel5.setText("Jurusan");
 
-        txt_jurusan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Pilih Jurusan --", "Akutansi", "Manajemen", "Pariwisata", "Pemasaran" }));
+        txt_jurusan.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "-- Pilih Jurusan --", "Akutansi", "Administrasi Perkantoran", "Multimedia", "Pemasaran", "Usaha Perjalanan Wisata" }));
+        txt_jurusan.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                txt_jurusanItemStateChanged(evt);
+            }
+        });
+
+        kls_1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--", "X", "XI", "XII" }));
+
+        jLabel6.setText("-");
+
+        kls_2.setText("--");
+
+        kls_3.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "--", "1", "2", "3", "4", "5", "6" }));
+
+        jLabel7.setText("-");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -91,13 +113,21 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                     .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txt_kelas, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_nis, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txt_jurusan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(47, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txt_nama, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txt_nis, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(kls_1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(kls_2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(kls_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txt_jurusan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -117,8 +147,12 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(txt_kelas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(15, Short.MAX_VALUE))
+                    .addComponent(kls_1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6)
+                    .addComponent(kls_2)
+                    .addComponent(kls_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel7))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         btn_batal.setText("Batal");
@@ -150,7 +184,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                 .addComponent(btn_tambah1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(103, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -173,32 +207,64 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
     private void btn_tambah1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tambah1ActionPerformed
         // TODO add your handling code here:
         String data[] = new String[4];
-        String jurusan;
-        if(txt_jurusan.getSelectedItem()== "Akutansi") 
+        
+        String var_kls_1, var_kls_3;
+        String kelas;
+        
+        
+        
+        //mengatur tingkat kelas
+        if(kls_1.getSelectedItem()=="X") 
         {            
-            jurusan = "Akutansi";
+            var_kls_1 = "X";                       
         }
-        else if(txt_jurusan.getSelectedItem()== "Manajemen")
+        else if(kls_1.getSelectedItem()=="XI") 
+        {            
+            var_kls_1 = "XI";                       
+        }
+        else if(kls_1.getSelectedItem()=="XII") 
+        {            
+            var_kls_1 = "XII";                       
+        }
+        else
         {
-            jurusan = "Manajemen";     
-        }
-        else if(txt_jurusan.getSelectedItem()== "Pariwisata")
-        {
-            jurusan = "Pariwisata";     
-        }
-        else if(txt_jurusan.getSelectedItem()== "Pemasaran")
-        {
-            jurusan = "Pemasaran";     
-        }
-        else if(txt_jurusan.getSelectedItem()== "Kumang")
-        {
-            jurusan = "Kumang";     
-        }
-        else {
-            jurusan = null;
+            var_kls_1 = null;
         }
         
-        if (txt_nis.getText().isEmpty() || txt_nama.getText().isEmpty() || txt_kelas.getText().isEmpty() || jurusan.isEmpty()){
+        //mengatur nomor kelas
+        if(kls_3.getSelectedItem()=="1") 
+        {            
+            var_kls_3 = "1";                       
+        }
+        else if(kls_3.getSelectedItem()=="2") 
+        {            
+            var_kls_3 = "2";                       
+        }
+        else if(kls_3.getSelectedItem()=="3") 
+        {            
+            var_kls_3 = "3";                       
+        }
+        else if(kls_3.getSelectedItem()=="4") 
+        {            
+            var_kls_3 = "4";                       
+        }
+        else if(kls_3.getSelectedItem()=="5") 
+        {            
+            var_kls_3 = "5";                       
+        }
+        else if(kls_3.getSelectedItem()=="6") 
+        {            
+            var_kls_3 = "6";                       
+        }
+        else
+        {
+            var_kls_3 = null;
+        }
+        
+        kelas = var_kls_1+"-"+var_kls_2+"-"+var_kls_3;
+        
+        if (txt_nis.getText().isEmpty() || txt_nama.getText().isEmpty() || kls_1.getSelectedItem() == "--" 
+                || kls_3.getSelectedItem() == "--" || jurusan.isEmpty()){
             
             JOptionPane.showMessageDialog(null, "Data Tidak Boleh Kosong, Silahkan Dilengkapi");
         }
@@ -218,7 +284,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                             + "values"
                             + "( '"+txt_nis.getText()+"',"
                             + " '"+txt_nama.getText()+"',"
-                            + " '"+txt_kelas.getText()+"',"                                                      
+                            + " '"+kelas+"',"                                                      
                             + " '"+jurusan+"')";
                     
                     stt.executeUpdate(SQL);
@@ -252,7 +318,9 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         */
             txt_nis.setText("");
             txt_nama.setText("");
-            txt_kelas.setText("");
+            kls_1.setSelectedIndex(0);
+            kls_3.setSelectedIndex(0);
+            kls_2.setText("--");
             txt_jurusan.setSelectedIndex(0);
     }//GEN-LAST:event_btn_tambah1ActionPerformed
 
@@ -260,7 +328,9 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         // TODO add your handling code here:
         txt_nama.setText("");
         txt_nis.setText("");
-        txt_kelas.setText("");
+        kls_1.setSelectedIndex(0);
+        kls_3.setSelectedIndex(0);
+        kls_2.setText("--");
         txt_jurusan.setSelectedIndex(0);
         txt_nis.requestFocusInWindow();
     }//GEN-LAST:event_btn_batalActionPerformed
@@ -270,6 +340,45 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         frm_utama utama = new frm_utama();
         utama.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
+
+    private void txt_jurusanItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_txt_jurusanItemStateChanged
+        // TODO add your handling code here:
+        if(txt_jurusan.getSelectedItem()=="Akutansi") 
+        {            
+            jurusan = "Akutansi";
+            var_kls_2 = "AK";
+            kls_2.setText(var_kls_2);
+            
+        }
+        else if(txt_jurusan.getSelectedItem()== "Administrasi Perkantoran")
+        {
+            jurusan = "Administrasi Perkantoran";
+            var_kls_2 = "AP";
+            kls_2.setText(var_kls_2);
+        }
+        else if(txt_jurusan.getSelectedItem()== "Multimedia")
+        {
+            jurusan = "Multimedia";
+            var_kls_2 = "MM";
+            kls_2.setText(var_kls_2);
+        }
+        else if(txt_jurusan.getSelectedItem()== "Pemasaran")
+        {
+            jurusan = "Pemasaran";   
+            var_kls_2 = "PM";
+            kls_2.setText(var_kls_2);
+        }
+        else if(txt_jurusan.getSelectedItem()== "Usaha Perjalanan Wisata")
+        {
+            jurusan = "Usaha Perjalanan Wisata";
+            var_kls_2 = "UPW";
+            kls_2.setText(var_kls_2);
+        }
+        else {
+            jurusan = null;
+            var_kls_2 = null;
+        }
+    }//GEN-LAST:event_txt_jurusanItemStateChanged
 
     /**
      * @param args the command line arguments
@@ -314,9 +423,13 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JComboBox kls_1;
+    private javax.swing.JLabel kls_2;
+    private javax.swing.JComboBox kls_3;
     private javax.swing.JComboBox txt_jurusan;
-    private javax.swing.JTextField txt_kelas;
     private javax.swing.JTextField txt_nama;
     private javax.swing.JTextField txt_nis;
     // End of variables declaration//GEN-END:variables

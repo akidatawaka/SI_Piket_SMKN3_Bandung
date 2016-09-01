@@ -57,21 +57,33 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tampil Data Guru"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_tampil_guruActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_tambah_guru">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Tambah Data Guru"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_tambah_guruActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_ubah_guru">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Ubah Data Guru"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_ubah_guruActionPerformed"/>
+              </Events>
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_hapus_guru">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Hapus Data Guru"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_hapus_guruActionPerformed"/>
+              </Events>
             </MenuItem>
           </SubComponents>
         </Menu>

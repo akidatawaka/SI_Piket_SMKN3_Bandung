@@ -16,6 +16,9 @@ public class frm_utama extends javax.swing.JFrame {
     /**
      * Creates new form frm_utama
      */
+    
+    frm_ubah_guru ubah_guru = new frm_ubah_guru();
+    
     public frm_utama() {
         initComponents();
     }
@@ -86,15 +89,35 @@ public class frm_utama extends javax.swing.JFrame {
         jMenu2.setText("Guru");
 
         jMenuItem_tampil_guru.setText("Tampil Data Guru");
+        jMenuItem_tampil_guru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_tampil_guruActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem_tampil_guru);
 
         jMenuItem_tambah_guru.setText("Tambah Data Guru");
+        jMenuItem_tambah_guru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_tambah_guruActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem_tambah_guru);
 
         jMenuItem_ubah_guru.setText("Ubah Data Guru");
+        jMenuItem_ubah_guru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ubah_guruActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem_ubah_guru);
 
         jMenuItem_hapus_guru.setText("Hapus Data Guru");
+        jMenuItem_hapus_guru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_hapus_guruActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem_hapus_guru);
 
         jMenuBar1.add(jMenu2);
@@ -150,6 +173,38 @@ public class frm_utama extends javax.swing.JFrame {
         
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem_hapus_siswaActionPerformed
+
+    private void jMenuItem_tampil_guruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tampil_guruActionPerformed
+        // TODO add your handling code here:
+        frm_tampil_guru tampil_guru = new frm_tampil_guru();
+        tampil_guru.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem_tampil_guruActionPerformed
+
+    private void jMenuItem_tambah_guruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tambah_guruActionPerformed
+        // TODO add your handling code here:
+        frm_tambah_guru tambah_guru = new frm_tambah_guru();
+        tambah_guru.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem_tambah_guruActionPerformed
+
+    private void jMenuItem_ubah_guruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ubah_guruActionPerformed
+        // TODO add your handling code here:
+        
+        ubah_guru.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem_ubah_guruActionPerformed
+
+    private void jMenuItem_hapus_guruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_hapus_guruActionPerformed
+        // TODO add your handling code here:
+        frm_hapus_guru hapus_guru = new frm_hapus_guru();
+        hapus_guru.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem_hapus_guruActionPerformed
 
     /**
      * @param args the command line arguments

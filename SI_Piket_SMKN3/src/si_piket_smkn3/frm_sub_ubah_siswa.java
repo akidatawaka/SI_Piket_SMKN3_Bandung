@@ -279,6 +279,7 @@ public class frm_sub_ubah_siswa extends javax.swing.JFrame {
         ubah_siswa.setJurusan(jurusan);
         ubah_siswa.setKelas(kelas);
         
+        
         ubah_siswa.setVisible(true);
         this.setVisible(false);
         
