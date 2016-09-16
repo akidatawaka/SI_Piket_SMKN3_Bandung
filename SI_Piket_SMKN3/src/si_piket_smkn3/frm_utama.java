@@ -44,6 +44,10 @@ public class frm_utama extends javax.swing.JFrame {
         jMenuItem_tambah_guru = new javax.swing.JMenuItem();
         jMenuItem_ubah_guru = new javax.swing.JMenuItem();
         jMenuItem_hapus_guru = new javax.swing.JMenuItem();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem_tambah_piket = new javax.swing.JMenuItem();
+        jMenuItem_ubah_piket = new javax.swing.JMenuItem();
+        jMenuItem_hapus_piket = new javax.swing.JMenuItem();
 
         jMenuItem4.setText("jMenuItem4");
 
@@ -121,6 +125,34 @@ public class frm_utama extends javax.swing.JFrame {
         jMenu2.add(jMenuItem_hapus_guru);
 
         jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Piket");
+
+        jMenuItem_tambah_piket.setText("Tambah Data Piket");
+        jMenuItem_tambah_piket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_tambah_piketActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem_tambah_piket);
+
+        jMenuItem_ubah_piket.setText("Ubah Data Piket");
+        jMenuItem_ubah_piket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_ubah_piketActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem_ubah_piket);
+
+        jMenuItem_hapus_piket.setText("Hapus Data Piket");
+        jMenuItem_hapus_piket.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_hapus_piketActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem_hapus_piket);
+
+        jMenuBar1.add(jMenu3);
 
         setJMenuBar(jMenuBar1);
 
@@ -206,6 +238,22 @@ public class frm_utama extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem_hapus_guruActionPerformed
 
+    private void jMenuItem_tambah_piketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tambah_piketActionPerformed
+        // TODO add your handling code here:
+        frm_tambah_piket tambah_piket = new frm_tambah_piket();
+        tambah_piket.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem_tambah_piketActionPerformed
+
+    private void jMenuItem_ubah_piketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ubah_piketActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem_ubah_piketActionPerformed
+
+    private void jMenuItem_hapus_piketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_hapus_piketActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem_hapus_piketActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -244,15 +292,19 @@ public class frm_utama extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem_hapus_guru;
+    private javax.swing.JMenuItem jMenuItem_hapus_piket;
     private javax.swing.JMenuItem jMenuItem_hapus_siswa;
     private javax.swing.JMenuItem jMenuItem_tambah_guru;
+    private javax.swing.JMenuItem jMenuItem_tambah_piket;
     private javax.swing.JMenuItem jMenuItem_tambah_siswa;
     private javax.swing.JMenuItem jMenuItem_tampil_guru;
     private javax.swing.JMenuItem jMenuItem_tampil_siswa;
     private javax.swing.JMenuItem jMenuItem_ubah_guru;
+    private javax.swing.JMenuItem jMenuItem_ubah_piket;
     private javax.swing.JMenuItem jMenuItem_ubah_siswa;
     // End of variables declaration//GEN-END:variables
 }
