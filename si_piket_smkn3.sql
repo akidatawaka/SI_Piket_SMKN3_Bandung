@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 01 Sep 2016 pada 19.05
+-- Generation Time: 23 Sep 2016 pada 03.34
 -- Versi Server: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -46,6 +46,34 @@ INSERT INTO `guru` (`id`, `nip`, `nama`, `mata_pelajaran`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `piket`
+--
+
+CREATE TABLE `piket` (
+  `id` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
+  `nis` varchar(8) NOT NULL,
+  `nama_siswa` varchar(40) NOT NULL,
+  `kelas_siswa` varchar(8) NOT NULL,
+  `jenis_pelanggaran` varchar(20) NOT NULL,
+  `keterangan` varchar(40) NOT NULL,
+  `tindak_lanjut` varchar(40) NOT NULL,
+  `id_guru_1` int(11) NOT NULL,
+  `nama_guru_1` varchar(40) NOT NULL,
+  `id_guru_2` int(11) NOT NULL,
+  `nama_guru_2` varchar(40) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `piket`
+--
+
+INSERT INTO `piket` (`id`, `tanggal`, `nis`, `nama_siswa`, `kelas_siswa`, `jenis_pelanggaran`, `keterangan`, `tindak_lanjut`, `id_guru_1`, `nama_guru_1`, `id_guru_2`, `nama_guru_2`) VALUES
+(1, '0000-00-00', '23456789', '', '', 'Bandel', 'Makan di dalam kelas', 'Dikebiri', 5, '', 6, '');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `siswa`
 --
 
@@ -61,6 +89,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nis`, `nama`, `kelas`, `jurusan`) VALUES
+('13434342', 'Komeng', 'XII-PM-6', 'Pemasaran'),
 ('22345678', 'Akida Tawaka', 'XI-MN-3', 'Manajemen'),
 ('23456789', 'Gilang Pasca Dwitama', 'XI-MN-3', 'Manajemen'),
 ('3354222', 'Bin Idris', 'XI-UPW-4', 'Usaha Perjalanan Wisata'),
@@ -78,6 +107,12 @@ ALTER TABLE `guru`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `piket`
+--
+ALTER TABLE `piket`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `siswa`
 --
 ALTER TABLE `siswa`
@@ -91,7 +126,12 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT for table `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+--
+-- AUTO_INCREMENT for table `piket`
+--
+ALTER TABLE `piket`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
