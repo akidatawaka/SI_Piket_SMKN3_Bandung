@@ -5,7 +5,12 @@
  */
 package si_piket_smkn3;
 
+import java.sql.Connection;
+import java.sql.Date;
+import java.sql.DriverManager;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -18,48 +23,41 @@ public class frm_tambah_piket extends javax.swing.JFrame {
      */
     
     //kamus global
+    koneksi dbsetting;
+    String driver, database, user, pass;
+    public static data_piket dataPiket1 = new data_piket();
     String format_tanggal = "yyyy-MM-dd";
     SimpleDateFormat fm = new SimpleDateFormat(format_tanggal);
+    //Date tanggal;
+    String tanggal,nis, nama_siswa,kelas_siswa,id_guru1,nama_guru1,id_guru2,nama_guru2,
+           jenis_pelanggaran,keterangan,tindak_lanjut;
     
-    //getter setter
-    public String getNama_Siswa() {
-        return this.txt_nama_siswa.getText();
+    public static void generateSiswa(String nis, String nama, String kelas) {
+        txt_nis.setText(nis);
+        txt_nama_siswa.setText(nama);
+        txt_kelas_siswa.setText(kelas);
     }
     
-    public void setNama_Siswa(String nama_siswa) {
-        this.txt_nama_siswa.setText(nama_siswa);
+    public static void generateGuru1(String id, String nama){
+        txt_id_guru_1.setText(id);
+        txt_nama_guru_1.setText(nama);
     }
     
-    public String getKelas_Siswa() {
-        return this.txt_kelas_siswa.getText();
-    }
-    
-    public void setKelas_Siswa(String kelas_siswa) {
-        this.txt_kelas_siswa.setText(kelas_siswa);
-    }
-    
-    
-    //getter setter guru1
-    public String getId_Guru1() {
-        return this.txt_id_guru_1.getText();
-    }
-    
-    public void setId_Guru1(String id_guru1) {
-        this.txt_id_guru_1.setText(id_guru1);
-    }
-    
-    public String getNama_Guru1() {
-        return this.txt_nama_guru_1.getText();
-    }
-    
-    public void setNama_Guru1(String nama_guru1) {
-        this.txt_nama_guru_1.setText(nama_guru1);
+    public static void generateGuru2(String id, String nama){
+        txt_id_guru_2.setText(id);
+        txt_nama_guru_2.setText(nama);
     }
     
     public frm_tambah_piket() {
         initComponents();
+        
+        dbsetting = new koneksi();
+        driver = dbsetting.SettingPanel("DBDriver");
+        database = dbsetting.SettingPanel("DBDatabase");
+        user = dbsetting.SettingPanel("DBUsername");
+        pass = dbsetting.SettingPanel("DBPassword");
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -79,6 +77,9 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         txt_nama_siswa = new javax.swing.JLabel();
         txt_kelas_siswa = new javax.swing.JLabel();
         btn_lihat_siswa = new javax.swing.JButton();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        txt_nis = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -88,7 +89,7 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txt_jenis_pelanggaran = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        txt_tingkat_lanjut = new javax.swing.JTextArea();
+        txt_tindak_lanjut = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
         txt_keterangan = new javax.swing.JTextArea();
         jPanel3 = new javax.swing.JPanel();
@@ -109,7 +110,7 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         btn_lihat_guru_2 = new javax.swing.JButton();
         btn_simpan = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        txt_tanggal = new com.toedter.calendar.JDateChooser();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -145,34 +146,54 @@ public class frm_tambah_piket extends javax.swing.JFrame {
             }
         });
 
+        jLabel6.setText("NIS");
+
+        jLabel7.setText(":");
+
+        txt_nis.setText("-");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(16, Short.MAX_VALUE)
+                .addComponent(btn_lihat_siswa)
+                .addGap(14, 14, 14))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(btn_lihat_siswa))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_nama_siswa))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_kelas_siswa)))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addComponent(txt_kelas_siswa))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_nama_siswa)
+                            .addComponent(txt_nis))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(10, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jLabel7)
+                    .addComponent(txt_nis))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
@@ -182,9 +203,9 @@ public class frm_tambah_piket extends javax.swing.JFrame {
                     .addComponent(jLabel3)
                     .addComponent(jLabel5)
                     .addComponent(txt_kelas_siswa))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_lihat_siswa)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Pelanggaran", javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.DEFAULT_POSITION));
@@ -201,9 +222,9 @@ public class frm_tambah_piket extends javax.swing.JFrame {
 
         jLabel13.setText(":");
 
-        txt_tingkat_lanjut.setColumns(20);
-        txt_tingkat_lanjut.setRows(3);
-        jScrollPane1.setViewportView(txt_tingkat_lanjut);
+        txt_tindak_lanjut.setColumns(20);
+        txt_tindak_lanjut.setRows(3);
+        jScrollPane1.setViewportView(txt_tindak_lanjut);
 
         txt_keterangan.setColumns(20);
         txt_keterangan.setRows(3);
@@ -215,28 +236,29 @@ public class frm_tambah_piket extends javax.swing.JFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txt_jenis_pelanggaran, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel10)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel8)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txt_jenis_pelanggaran, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel12)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel12)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -263,16 +285,19 @@ public class frm_tambah_piket extends javax.swing.JFrame {
 
         jPanel3.setBorder(javax.swing.BorderFactory.createTitledBorder("Guru Piket 1"));
 
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel14.setText("ID Guru");
 
         jLabel15.setText(":");
 
+        txt_id_guru_1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_id_guru_1.setText("-");
 
         jLabel17.setText("Nama Guru");
 
         jLabel18.setText(":");
 
+        txt_nama_guru_1.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_nama_guru_1.setText("-");
 
         btn_lihat_guru_1.setText("Lihat Data Guru");
@@ -328,19 +353,28 @@ public class frm_tambah_piket extends javax.swing.JFrame {
 
         jPanel4.setBorder(javax.swing.BorderFactory.createTitledBorder("Guru Piket 2"));
 
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel20.setText("ID Guru");
 
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         jLabel21.setText(":");
 
+        txt_id_guru_2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_id_guru_2.setText("-");
 
         jLabel23.setText("Nama Guru");
 
         jLabel24.setText(":");
 
+        txt_nama_guru_2.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_nama_guru_2.setText("-");
 
         btn_lihat_guru_2.setText("Lihat Data Guru");
+        btn_lihat_guru_2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lihat_guru_2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -387,6 +421,11 @@ public class frm_tambah_piket extends javax.swing.JFrame {
 
         btn_simpan.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         btn_simpan.setText("Simpan");
+        btn_simpan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_simpanActionPerformed(evt);
+            }
+        });
 
         jPanel5.setBorder(javax.swing.BorderFactory.createTitledBorder("Masukkan Tanggal"));
 
@@ -394,16 +433,16 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         jPanel5.setLayout(jPanel5Layout);
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+            .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(txt_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txt_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -412,50 +451,46 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 12, Short.MAX_VALUE))
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(6, 6, 6)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 617, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(89, 89, 89)
-                                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(247, 247, 247)
-                                .addComponent(btn_simpan)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addGap(89, 89, 89)
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(247, 247, 247)
+                        .addComponent(btn_simpan)))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                .addGap(6, 6, 6)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_simpan)
-                .addContainerGap())
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addComponent(btn_simpan))
         );
 
         pack();
@@ -465,11 +500,18 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     private void btn_lihat_siswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihat_siswaActionPerformed
         // TODO add your handling code here:
         frm_sub_piket_siswa piket_siswa = new frm_sub_piket_siswa();
-        piket_siswa.setVisible(true);
-        
+        piket_siswa.status = 1;
+        piket_siswa.setVisible(true); 
+                
+        /*
+        data_piket piket_piket = data_piket;
+        nama_siswa = piket_piket.getNama_Siswa();
+        kelas_siswa = piket_piket.getKelas_Siswa();
         this.setVisible(false);
+        */
     }//GEN-LAST:event_btn_lihat_siswaActionPerformed
 
+    
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
         frm_utama utama = new frm_utama();
@@ -481,10 +523,101 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     private void btn_lihat_guru_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihat_guru_1ActionPerformed
         // TODO add your handling code here:
         frm_sub_piket_guru1 piket_guru1 = new frm_sub_piket_guru1();
+        piket_guru1.status = 1;
         piket_guru1.setVisible(true);
         
-        this.setVisible(false);
+       // this.setVisible(false);
     }//GEN-LAST:event_btn_lihat_guru_1ActionPerformed
+
+    private void btn_lihat_guru_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihat_guru_2ActionPerformed
+        // TODO add your handling code here:
+                frm_sub_piket_guru1 piket_guru1 = new frm_sub_piket_guru1();
+        piket_guru1.status = 2;
+        piket_guru1.setVisible(true);
+    }//GEN-LAST:event_btn_lihat_guru_2ActionPerformed
+
+    private void btn_simpanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_simpanActionPerformed
+        // TODO add your handling code here:
+        //memasukkan data ke dalam variabel
+        //tanggal = txt_tanggal.getDateEditor().getUiComponent().getText;
+        if (txt_nis.getText().isEmpty() || txt_id_guru_1.getText().isEmpty() || txt_jenis_pelanggaran.getText().isEmpty() ||
+            txt_keterangan.getText().isEmpty() || txt_tindak_lanjut.getText().isEmpty()) {
+            
+            JOptionPane.showMessageDialog(null, "Data Tidak Boleh Kosong, Silahkan Dilengkapi");
+            
+        } else {
+        tanggal = new SimpleDateFormat(format_tanggal).format(txt_tanggal.getDate());
+        
+        nis = txt_nis.getText();
+        nama_siswa = txt_nama_siswa.getText();
+        kelas_siswa = txt_kelas_siswa.getText();
+        
+        id_guru1 = txt_id_guru_1.getText();
+        nama_guru1 = txt_nama_guru_1.getText();
+        
+        id_guru2 = txt_id_guru_2.getText();
+        nama_guru2 = txt_nama_guru_2.getText();
+        
+        jenis_pelanggaran = txt_jenis_pelanggaran.getText();
+        keterangan = txt_keterangan.getText();
+        tindak_lanjut = txt_tindak_lanjut.getText();
+        
+        
+            try {
+                Class.forName(driver);
+                    Connection kon = DriverManager.getConnection(
+                            database,
+                            user,
+                            pass);
+                    Statement stt = kon.createStatement();
+                    String SQL = "insert into piket (id,"
+                            + "tanggal,"
+                            + "nis,"
+                            + "nama_siswa,"
+                            + "kelas_siswa,"
+                            + "jenis_pelanggaran,"
+                            + "keterangan,"
+                            + "tindak_lanjut,"
+                            + "id_guru_1,"
+                            + "nama_guru_1,"
+                            + "id_guru_2,"
+                            + "nama_guru_2) "
+                            +"values"
+                            + "( NULL,"
+                            + " '"+tanggal+"',"
+                            + " '"+nis+"',"
+                            + " '"+nama_siswa+"',"
+                            + " '"+kelas_siswa+"',"
+                            + " '"+jenis_pelanggaran+"',"
+                            + " '"+keterangan+"',"
+                            + " '"+tindak_lanjut+"',"
+                            + " '"+id_guru1+"',"
+                            + " '"+nama_guru1+"',"
+                            + " '"+id_guru2+"',"                                  
+                            + " '"+nama_guru2+"')";
+                    stt.executeUpdate(SQL);
+                    stt.close();
+                    kon.close();
+                    JOptionPane.showMessageDialog(null, "Data Piket Berhasil Ditambah");               
+            } 
+            catch (Exception ex)
+            {
+                JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        txt_tanggal.setCalendar(null);
+        txt_nis.setText("");
+        txt_nama_siswa.setText("");
+        txt_kelas_siswa.setText("");
+        txt_id_guru_1.setText("");
+        txt_nama_guru_1.setText("");
+        txt_id_guru_2.setText("");
+        txt_nama_guru_2.setText("");
+        txt_jenis_pelanggaran.setText("");
+        txt_keterangan.setText("");
+        txt_tindak_lanjut.setText("");
+        }
+    }//GEN-LAST:event_btn_simpanActionPerformed
 
     /**
      * @param args the command line arguments
@@ -526,7 +659,6 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     private javax.swing.JButton btn_lihat_guru_2;
     private javax.swing.JButton btn_lihat_siswa;
     private javax.swing.JButton btn_simpan;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -544,6 +676,8 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -554,14 +688,16 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JLabel txt_id_guru_1;
-    private javax.swing.JLabel txt_id_guru_2;
+    public static javax.swing.JLabel txt_id_guru_1;
+    public static javax.swing.JLabel txt_id_guru_2;
     private javax.swing.JTextField txt_jenis_pelanggaran;
-    private javax.swing.JLabel txt_kelas_siswa;
+    public static javax.swing.JLabel txt_kelas_siswa;
     private javax.swing.JTextArea txt_keterangan;
-    private javax.swing.JLabel txt_nama_guru_1;
-    private javax.swing.JLabel txt_nama_guru_2;
-    private javax.swing.JLabel txt_nama_siswa;
-    private javax.swing.JTextArea txt_tingkat_lanjut;
+    public static javax.swing.JLabel txt_nama_guru_1;
+    public static javax.swing.JLabel txt_nama_guru_2;
+    public static javax.swing.JLabel txt_nama_siswa;
+    public static javax.swing.JLabel txt_nis;
+    private com.toedter.calendar.JDateChooser txt_tanggal;
+    private javax.swing.JTextArea txt_tindak_lanjut;
     // End of variables declaration//GEN-END:variables
 }

@@ -26,9 +26,7 @@ public class frm_ubah_guru extends javax.swing.JFrame {
     Object tabel;
     
     String id_nya;
-    
-    
-    
+        
     //getter setter
     public String getId(){
         return id_nya;

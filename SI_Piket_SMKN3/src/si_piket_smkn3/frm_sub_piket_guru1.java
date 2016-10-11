@@ -17,15 +17,12 @@ import javax.swing.JOptionPane;
  */
 public class frm_sub_piket_guru1 extends javax.swing.JFrame {
 
-    /**
-     * Creates new form frm_sub_piket_guru1
-     */
     
     //deklarasi variabel
     koneksi dbsetting;
     String driver, database, user, pass;
     Object tabel;
-    
+    public static int status;
      String id,nip,nama,mata_pelajaran;
     
     public frm_sub_piket_guru1() {
@@ -39,6 +36,7 @@ public class frm_sub_piket_guru1 extends javax.swing.JFrame {
         
         tbl_guru.setModel(tableModel);
         settableload(); 
+        
     }
 
     private javax.swing.table.DefaultTableModel tableModel = getDefaultTabelModel();
@@ -227,14 +225,15 @@ public class frm_sub_piket_guru1 extends javax.swing.JFrame {
         int row = 0;
         row = tbl_guru.getSelectedRow();
         id = tableModel.getValueAt(row, 0).toString();
-        nip = tableModel.getValueAt(row, 1).toString();
+        //nip = tableModel.getValueAt(row, 1).toString();
         nama = tableModel.getValueAt(row, 2).toString();
-        mata_pelajaran = tableModel.getValueAt(row, 3).toString();
+        //mata_pelajaran = tableModel.getValueAt(row, 3).toString();
         
+        /*
         frm_tambah_piket tambah_piket = new frm_tambah_piket();
         tambah_piket.setId_Guru1(id);
         tambah_piket.setNama_Guru1(nama);
-
+        */
         /*
         frm_ubah_guru ubah_guru = new frm_ubah_guru();
         ubah_guru.setId(id);
@@ -244,7 +243,19 @@ public class frm_sub_piket_guru1 extends javax.swing.JFrame {
 
         ubah_guru.setVisible(true);
         */
-        tambah_piket.setVisible(true);
+        
+        //tambah_piket.setVisible(true);
+        if(status == 1){
+        frm_tambah_piket.generateGuru1(id, nama); 
+        
+        }else if(status == 2){
+                    frm_tambah_piket.generateGuru2(id, nama);
+        }else if (status == 3){
+                    frm_sub_ubah_piket.generateGuru1(id,nama);
+        }else if (status == 4){
+                    frm_sub_ubah_piket.generateGuru2(id,nama);
+        }
+
         this.setVisible(false);
     }//GEN-LAST:event_btn_pilihActionPerformed
 

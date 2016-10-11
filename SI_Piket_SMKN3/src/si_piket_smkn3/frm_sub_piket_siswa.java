@@ -10,12 +10,17 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import static si_piket_smkn3.frm_sub_piket_guru1.status;
 
 /**
  *
  * @author tawakida
  */
 public class frm_sub_piket_siswa extends javax.swing.JFrame {
+
+    static String main(String nama_siswa) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 
     /**
      * Creates new form frm_sub_piket_siswa
@@ -25,7 +30,9 @@ public class frm_sub_piket_siswa extends javax.swing.JFrame {
     koneksi dbsetting;
     String driver, database, user, pass;
     Object tabel;
-    
+    String nis, nama_siswa, kelas_siswa;
+    data_piket data_piket1 = new data_piket();
+    public static int status;
     
     public frm_sub_piket_siswa() {
         initComponents();
@@ -38,7 +45,12 @@ public class frm_sub_piket_siswa extends javax.swing.JFrame {
         tbl_siswa.setModel(tableModel);
         settableload();
     }
-
+    public String getNama_Siswa() {
+        return nama_siswa;
+    }
+    public String getKelas_Siswa() {
+        return kelas_siswa;
+    }
     
     private javax.swing.table.DefaultTableModel tableModel = getDefaultTabelModel();
     private javax.swing.table.DefaultTableModel getDefaultTabelModel()
@@ -230,20 +242,32 @@ public class frm_sub_piket_siswa extends javax.swing.JFrame {
         int row = 0;
         
         row = tbl_siswa.getSelectedRow();
-        //String nis = tableModel.getValueAt(row, 0).toString();
-        String nama_siswa = tableModel.getValueAt(row, 1).toString();
-        String kelas_siswa = tableModel.getValueAt(row, 2).toString();
+        nis = tableModel.getValueAt(row, 0).toString();
+        nama_siswa = tableModel.getValueAt(row, 1).toString();
+        kelas_siswa = tableModel.getValueAt(row, 2).toString();
         //jurusan = tableModel.getValueAt(row, 3).toString();
+                
+        //data_piket1.setNama_Siswa(nama_siswa);
+        //data_piket1.setKelas_Siswa(kelas_siswa);
+        
         
 
-        frm_tambah_piket tambah_piket = new frm_tambah_piket();
+        /*frm_tambah_piket tambah_piket = new frm_tambah_piket();
         tambah_piket.setNama_Siswa(nama_siswa);
         tambah_piket.setKelas_Siswa(kelas_siswa);
         /*
         ubah_siswa.setJurusan(jurusan);
         ubah_siswa.setKelas(kelas);
-        */
+        
         tambah_piket.setVisible(true);
+        */
+        if(status == 1){
+        frm_tambah_piket.generateSiswa(nis, nama_siswa, kelas_siswa);
+        
+        }else if(status == 2){
+                    frm_sub_ubah_piket.generateSiswa(nis, nama_siswa, kelas_siswa);
+        }
+        
         this.setVisible(false);
         
 

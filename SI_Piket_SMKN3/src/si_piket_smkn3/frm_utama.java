@@ -248,10 +248,18 @@ public class frm_utama extends javax.swing.JFrame {
 
     private void jMenuItem_ubah_piketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ubah_piketActionPerformed
         // TODO add your handling code here:
+        frm_ubah_piket ubah_piket = new frm_ubah_piket();
+        ubah_piket.setVisible(true);
+        
+        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem_ubah_piketActionPerformed
 
     private void jMenuItem_hapus_piketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_hapus_piketActionPerformed
         // TODO add your handling code here:
+        frm_hapus_piket hapus_piket = new frm_hapus_piket();
+        hapus_piket.setVisible(true);
+        
+        this.setVisible(false);
     }//GEN-LAST:event_jMenuItem_hapus_piketActionPerformed
 
     /**

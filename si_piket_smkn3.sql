@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: 23 Sep 2016 pada 03.34
+-- Generation Time: 11 Okt 2016 pada 12.38
 -- Versi Server: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -69,7 +69,9 @@ CREATE TABLE `piket` (
 --
 
 INSERT INTO `piket` (`id`, `tanggal`, `nis`, `nama_siswa`, `kelas_siswa`, `jenis_pelanggaran`, `keterangan`, `tindak_lanjut`, `id_guru_1`, `nama_guru_1`, `id_guru_2`, `nama_guru_2`) VALUES
-(1, '0000-00-00', '23456789', '', '', 'Bandel', 'Makan di dalam kelas', 'Dikebiri', 5, '', 6, '');
+(3, '1970-01-01', '76543210', 'Zlatan Ibrahimovic', 'XII-PM-6', 'Rambut Gondrong', 'Gondrong sampai se-mata kaki', 'Hukuman botak', 4, 'Suprayitno', 5, 'Jubaedah'),
+(4, '2016-10-12', '3354222', 'Bin Idris', 'XI-UPW-4', 'Celana terlalu ketat', 'Ketat banget coy', 'DIsuruh pakai sarung', 5, 'Jubaedah', 4, 'Suprayitno'),
+(5, '2016-10-06', '23456789', 'Gilang Pasca Dwitama', 'XI-MN-3', 'Ngupil', 'Banyak bgt upilnya', 'Mandi wajib', 5, 'Jubaedah', 4, 'Suprayitno');
 
 -- --------------------------------------------------------
 
@@ -90,7 +92,7 @@ CREATE TABLE `siswa` (
 
 INSERT INTO `siswa` (`nis`, `nama`, `kelas`, `jurusan`) VALUES
 ('13434342', 'Komeng', 'XII-PM-6', 'Pemasaran'),
-('22345678', 'Akida Tawaka', 'XI-MN-3', 'Manajemen'),
+('22345678', 'Akida doang', 'XI-MN-3', 'Manajemen'),
 ('23456789', 'Gilang Pasca Dwitama', 'XI-MN-3', 'Manajemen'),
 ('3354222', 'Bin Idris', 'XI-UPW-4', 'Usaha Perjalanan Wisata'),
 ('76543210', 'Zlatan Ibrahimovic', 'XII-PM-6', 'Pemasaran'),
@@ -131,7 +133,7 @@ ALTER TABLE `guru`
 -- AUTO_INCREMENT for table `piket`
 --
 ALTER TABLE `piket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

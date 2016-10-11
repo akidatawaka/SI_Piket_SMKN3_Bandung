@@ -12,7 +12,7 @@ package si_piket_smkn3;
 public class SI_Piket_SMKN3 {
 
     /**
-     * @param args the command line arguments
+     * @paramargs the command line arguments
      */
     public static void main(String[] args) {
         // TODO code application logic here
