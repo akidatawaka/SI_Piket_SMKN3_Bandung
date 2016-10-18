@@ -48,6 +48,8 @@ public class frm_utama extends javax.swing.JFrame {
         jMenuItem_tambah_piket = new javax.swing.JMenuItem();
         jMenuItem_ubah_piket = new javax.swing.JMenuItem();
         jMenuItem_hapus_piket = new javax.swing.JMenuItem();
+        jMenuItem_tampil = new javax.swing.JMenuItem();
+        jMenuItem_tampil_tanggal = new javax.swing.JMenuItem();
 
         jMenuItem4.setText("jMenuItem4");
 
@@ -151,6 +153,22 @@ public class frm_utama extends javax.swing.JFrame {
             }
         });
         jMenu3.add(jMenuItem_hapus_piket);
+
+        jMenuItem_tampil.setText("Tampil Data Piket");
+        jMenuItem_tampil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_tampilActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem_tampil);
+
+        jMenuItem_tampil_tanggal.setText("Tampil Data Piket Berdasarkan Tanggal");
+        jMenuItem_tampil_tanggal.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_tampil_tanggalActionPerformed(evt);
+            }
+        });
+        jMenu3.add(jMenuItem_tampil_tanggal);
 
         jMenuBar1.add(jMenu3);
 
@@ -262,6 +280,22 @@ public class frm_utama extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem_hapus_piketActionPerformed
 
+    private void jMenuItem_tampilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tampilActionPerformed
+        // TODO add your handling code here:
+        frm_tampil_piket tampil_piketnya = new frm_tampil_piket();
+        tampil_piketnya.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem_tampilActionPerformed
+
+    private void jMenuItem_tampil_tanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tampil_tanggalActionPerformed
+        // TODO add your handling code here:
+        frm_tampil_piket_tanggal tampil_piket_tanggal = new frm_tampil_piket_tanggal();
+        tampil_piket_tanggal.setVisible(true);
+        
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem_tampil_tanggalActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -309,8 +343,10 @@ public class frm_utama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_tambah_guru;
     private javax.swing.JMenuItem jMenuItem_tambah_piket;
     private javax.swing.JMenuItem jMenuItem_tambah_siswa;
+    private javax.swing.JMenuItem jMenuItem_tampil;
     private javax.swing.JMenuItem jMenuItem_tampil_guru;
     private javax.swing.JMenuItem jMenuItem_tampil_siswa;
+    private javax.swing.JMenuItem jMenuItem_tampil_tanggal;
     private javax.swing.JMenuItem jMenuItem_ubah_guru;
     private javax.swing.JMenuItem jMenuItem_ubah_piket;
     private javax.swing.JMenuItem jMenuItem_ubah_siswa;
