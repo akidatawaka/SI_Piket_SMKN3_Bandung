@@ -22,6 +22,9 @@ import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.swing.JFileChooser;
+import java.io.File;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
  *
@@ -37,6 +40,8 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
     koneksi dbsetting;
     String driver, database, user, pass;
     Object tabel;
+    
+    String alamat_export;
     
     String format_tanggal = "yyyy-MM-dd";
     SimpleDateFormat fm = new SimpleDateFormat(format_tanggal);
@@ -64,7 +69,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         return tbl_piket.getValueAt(x,y).toString();
     }
     
-    private void exportexcel()
+    private void exportexcel(String alamat)
     {
         XSSFWorkbook wb = new XSSFWorkbook();
         XSSFSheet ws = wb.createSheet();
@@ -112,7 +117,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         //write excel to file system
         try
         {
-            FileOutputStream fos = new FileOutputStream(new File("D:/export_piket.xlsx"));
+            FileOutputStream fos = new FileOutputStream(new File(alamat));
             wb.write(fos);
             fos.close();
         }catch(Exception ex)
@@ -394,7 +399,19 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
 
     private void btn_export_excelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_export_excelActionPerformed
         // TODO add your handling code here:
-        exportexcel();
+        
+        JFileChooser buatfile = new JFileChooser();
+        //menambahkan pilihan save as xlsx
+        FileNameExtensionFilter xlsxFilter = new FileNameExtensionFilter("xlsx files (*.xlsx)", "xlsx");
+        buatfile.addChoosableFileFilter(xlsxFilter);
+        buatfile.setFileFilter(xlsxFilter);
+        
+        buatfile.showSaveDialog(null);
+        File x_file = buatfile.getSelectedFile();
+        
+        alamat_export = x_file.getAbsolutePath()+".xlsx";
+        
+        exportexcel(alamat_export);
         JOptionPane.showMessageDialog(null, "Data Piket Berhasil Di Ekspor !");
     }//GEN-LAST:event_btn_export_excelActionPerformed
 
@@ -402,30 +419,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(frm_tampil_piket_tanggal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(frm_tampil_piket_tanggal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(frm_tampil_piket_tanggal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(frm_tampil_piket_tanggal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
+                /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frm_tampil_piket_tanggal().setVisible(true);

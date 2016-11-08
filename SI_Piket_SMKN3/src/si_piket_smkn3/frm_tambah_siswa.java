@@ -9,6 +9,21 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import javax.swing.JFileChooser;
+import java.io.File;
+import java.io.FileInputStream;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
+import sun.security.action.OpenFileInputStreamAction;
+
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -25,8 +40,17 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
     String driver, database, user, pass;
     Object tabel;
     
+    Vector dataholder;
+    
+    public static int status;
+    
+    
     String var_kls_2;
-    String jurusan;
+    //String jurusan;
+    
+    String nama_file;
+    
+    static String nis,nama,kelas,jurusan;
     
     public frm_tambah_siswa() {
         dbsetting = new koneksi();
@@ -35,6 +59,75 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         user = dbsetting.SettingPanel("DBUsername");
         pass = dbsetting.SettingPanel("DBPassword");
         initComponents();
+    }
+    
+    public static Vector read(String fileName)    {
+        Vector cellVectorHolder = new Vector();
+        try{
+            FileInputStream myInput = new FileInputStream(fileName);
+            //POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+            XSSFWorkbook myWorkBook = new XSSFWorkbook(myInput);
+            XSSFSheet mySheet = myWorkBook.getSheetAt(0);
+            Iterator rowIter = mySheet.rowIterator();
+            while(rowIter.hasNext()){
+                XSSFRow myRow = (XSSFRow) rowIter.next();
+                Iterator cellIter = myRow.cellIterator();
+                //Vector cellStoreVector=new Vector();
+                List list = new ArrayList();
+                while(cellIter.hasNext()){
+                    XSSFCell myCell = (XSSFCell) cellIter.next();
+                    list.add(myCell);
+                }
+                cellVectorHolder.addElement(list);
+            }
+        }catch (Exception e){e.printStackTrace(); }
+        return cellVectorHolder;
+    }
+    private void saveToDatabase(Vector dataHolder){
+        nis="";
+        nama="";
+        kelas="";
+        jurusan="";
+        
+        System.out.println(dataHolder);
+
+        for(Iterator iterator = dataHolder.iterator();iterator.hasNext();) {
+            List list = (List) iterator.next();
+            nis = list.get(0).toString();
+            nama = list.get(1).toString();
+            kelas = list.get(2).toString();
+            jurusan = list.get(3).toString();
+
+            try {
+                Class.forName(driver);
+                    Connection kon = DriverManager.getConnection(
+                            database,
+                            user,
+                            pass);
+                    Statement stt = kon.createStatement();
+                    String SQL = "insert into siswa (nis,"
+                            + "nama,"
+                            + "kelas,"
+                            + "jurusan)"
+                            + "values"
+                            + "( '"+nis+"',"
+                            + " '"+nama+"',"
+                            + " '"+kelas+"',"                                                      
+                            + " '"+jurusan+"')";
+                    stt.executeUpdate(SQL);
+                    stt.close();
+                    kon.close();
+                    status = 2;
+            } catch (Exception ex)
+            {
+                status = 3;
+                JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        if (status == 2) {
+            JOptionPane.showMessageDialog(null, "Data Siswa Telah Berhasil Diimpor");
+        }
     }
 
     /**
@@ -62,6 +155,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         btn_batal = new javax.swing.JButton();
         btn_tambah1 = new javax.swing.JButton();
+        btn_import_siswa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -127,7 +221,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(kls_3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(txt_jurusan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -169,6 +263,13 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
             }
         });
 
+        btn_import_siswa.setText("Import Dari Excel");
+        btn_import_siswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_import_siswaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -180,11 +281,13 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(102, 102, 102)
+                .addGap(48, 48, 48)
                 .addComponent(btn_tambah1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_import_siswa)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -196,7 +299,8 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_batal)
-                    .addComponent(btn_tambah1))
+                    .addComponent(btn_tambah1)
+                    .addComponent(btn_import_siswa))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -380,6 +484,20 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txt_jurusanItemStateChanged
 
+    private void btn_import_siswaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_import_siswaActionPerformed
+        // TODO add your handling code here:
+        JFileChooser filechooser = new JFileChooser();
+        filechooser.showOpenDialog(null);
+        File x_file = filechooser.getSelectedFile();
+        nama_file = x_file.getAbsolutePath();
+        //txt_nama.setText(nama_file);
+        
+        dataholder = read(nama_file);
+        //read(nama_file);
+        saveToDatabase(dataholder);
+        
+    }//GEN-LAST:event_btn_import_siswaActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -406,8 +524,8 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(frm_tambah_siswa.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
-
         /* Create and display the form */
+        
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new frm_tambah_siswa().setVisible(true);
@@ -417,6 +535,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;
+    private javax.swing.JButton btn_import_siswa;
     private javax.swing.JButton btn_tambah1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

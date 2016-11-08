@@ -10,6 +10,22 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Set;
+import java.util.TreeMap;
+import javafx.scene.control.Cell;
+import org.apache.log4j.Logger;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.swing.JFileChooser;
+import java.io.File;
+import javax.swing.filechooser.FileNameExtensionFilter;
+
+
 
 /**
  *
@@ -25,6 +41,8 @@ public class frm_tampil_piket extends javax.swing.JFrame {
     koneksi dbsetting;
     String driver, database, user, pass;
     Object tabel;
+    
+    String alamat_export;
     
     public frm_tampil_piket() {
         initComponents();
@@ -117,6 +135,73 @@ public class frm_tampil_piket extends javax.swing.JFrame {
     
     }
     
+    //mengambil data dari tabel
+    private String getCellValue(int x, int y)
+    {
+        return tbl_piket.getValueAt(x,y).toString();
+    }
+    
+    private void exportexcel(String alamat)
+    {
+        XSSFWorkbook wb = new XSSFWorkbook();
+        XSSFSheet ws = wb.createSheet();
+        
+        //load data dari tabel ke treemap
+        TreeMap<Integer,Object[]> data = new  TreeMap<>();
+        data.put(0, new Object[]{tableModel.getColumnName(0),tableModel.getColumnName(1),
+                      tableModel.getColumnName(2),tableModel.getColumnName(3),
+                      tableModel.getColumnName(4),tableModel.getColumnName(5),
+                      tableModel.getColumnName(6),tableModel.getColumnName(7),
+                      tableModel.getColumnName(8),tableModel.getColumnName(9),
+                      tableModel.getColumnName(10),tableModel.getColumnName(11)}
+        );
+        for (int i = 1; i < tableModel.getRowCount()+1; i++) {            
+        
+        data.put(i,new Object[]{getCellValue(i-1, 0),getCellValue(i-1, 1),
+                                  getCellValue(i-1, 2),getCellValue(i-1, 3),
+                                  getCellValue(i-1, 4),getCellValue(i-1, 5),
+                                  getCellValue(i-1, 6),getCellValue(i-1, 7),
+                                  getCellValue(i-1, 8),getCellValue(i-1, 9),
+                                  getCellValue(i-1, 10),getCellValue(i-1, 11),
+        });
+        }
+        
+        //menulis ke kertas
+        Set<Integer> ids = data.keySet();
+        XSSFRow row;
+        int rowID=0;
+        
+        for(Integer key: ids)
+        {
+            row = ws.createRow(rowID++);
+            
+            //get data as per key
+            Object[] values = data.get(key);
+            
+            int cellID=0;
+            for(Object o: values)
+            {
+                XSSFCell cell = row.createCell(cellID++);
+                cell.setCellValue(o.toString());
+            }
+        }
+        
+        //write excel to file system
+        try
+        {
+            FileOutputStream fos = new FileOutputStream(new File(alamat));
+            wb.write(fos);
+            fos.close();
+        }catch(Exception ex)
+        {
+            System.err.println(ex.getMessage());
+            JOptionPane.showMessageDialog(null,
+                                          ex.getMessage(),"Error",
+                                          JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -130,6 +215,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txt_pencarian = new javax.swing.JTextField();
         btn_tampil = new javax.swing.JButton();
+        btn_export = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_piket = new javax.swing.JTable();
@@ -158,6 +244,14 @@ public class frm_tampil_piket extends javax.swing.JFrame {
             }
         });
 
+        btn_export.setText("Export Menjadi Excel");
+        btn_export.setEnabled(false);
+        btn_export.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_exportActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -166,10 +260,12 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
-                .addComponent(txt_pencarian, javax.swing.GroupLayout.DEFAULT_SIZE, 173, Short.MAX_VALUE)
+                .addComponent(txt_pencarian, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_tampil, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_export)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -178,7 +274,8 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(txt_pencarian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_tampil))
+                    .addComponent(btn_tampil)
+                    .addComponent(btn_export))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -212,7 +309,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(311, 311, 311))
+                .addGap(245, 245, 245))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -268,6 +365,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
             System.err.println(ex.getMessage());
             JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",JOptionPane.INFORMATION_MESSAGE);
         }
+        btn_export.setEnabled(true);
     }//GEN-LAST:event_txt_pencarianKeyReleased
 
     private void btn_tampilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_tampilMouseClicked
@@ -276,6 +374,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
         tableModel.setRowCount(0);
         settableload();
         txt_pencarian.setRequestFocusEnabled(true);
+        btn_export.setEnabled(false);
     }//GEN-LAST:event_btn_tampilMouseClicked
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
@@ -285,6 +384,23 @@ public class frm_tampil_piket extends javax.swing.JFrame {
         
         this.setVisible(false);
     }//GEN-LAST:event_formWindowClosed
+
+    private void btn_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exportActionPerformed
+        // TODO add your handling code here:
+        JFileChooser buatfile = new JFileChooser();
+        //menambahkan pilihan save as xlsx
+        FileNameExtensionFilter xlsxFilter = new FileNameExtensionFilter("xlsx files (*.xlsx)", "xlsx");
+        buatfile.addChoosableFileFilter(xlsxFilter);
+        buatfile.setFileFilter(xlsxFilter);
+        
+        buatfile.showSaveDialog(null);
+        File x_file = buatfile.getSelectedFile();
+        
+        alamat_export = x_file.getAbsolutePath()+".xlsx";
+        
+        exportexcel(alamat_export);
+        JOptionPane.showMessageDialog(null, "Data Piket Berhasil Di Ekspor !");
+    }//GEN-LAST:event_btn_exportActionPerformed
 
     /**
      * @param args the command line arguments
@@ -322,6 +438,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_export;
     private javax.swing.JButton btn_tampil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -1,9 +1,9 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.2
+-- version 4.5.1
 -- http://www.phpmyadmin.net
 --
--- Host: localhost
--- Generation Time: 11 Okt 2016 pada 12.38
+-- Host: 127.0.0.1
+-- Generation Time: 08 Nov 2016 pada 15.13
 -- Versi Server: 10.1.13-MariaDB
 -- PHP Version: 5.6.23
 
@@ -41,7 +41,9 @@ INSERT INTO `guru` (`id`, `nip`, `nama`, `mata_pelajaran`) VALUES
 (3, 'Kosong', 'Iman', 'Matematika'),
 (4, '123456789012345678', 'Suprayitno', 'Matematika'),
 (5, 'Kosong', 'Jubaedah', 'Mengaji'),
-(6, 'Kosong', 'Zulkifli', 'Agro');
+(6, 'Kosong', 'Zulkifli', 'Agro'),
+(7, '12321331', 'Arief Rahman', 'Mengaji'),
+(8, '12012312', 'Tini', 'Penjaskes');
 
 -- --------------------------------------------------------
 
@@ -71,7 +73,12 @@ CREATE TABLE `piket` (
 INSERT INTO `piket` (`id`, `tanggal`, `nis`, `nama_siswa`, `kelas_siswa`, `jenis_pelanggaran`, `keterangan`, `tindak_lanjut`, `id_guru_1`, `nama_guru_1`, `id_guru_2`, `nama_guru_2`) VALUES
 (3, '1970-01-01', '76543210', 'Zlatan Ibrahimovic', 'XII-PM-6', 'Rambut Gondrong', 'Gondrong sampai se-mata kaki', 'Hukuman botak', 4, 'Suprayitno', 5, 'Jubaedah'),
 (4, '2016-10-12', '3354222', 'Bin Idris', 'XI-UPW-4', 'Celana terlalu ketat', 'Ketat banget coy', 'DIsuruh pakai sarung', 5, 'Jubaedah', 4, 'Suprayitno'),
-(5, '2016-10-06', '23456789', 'Gilang Pasca Dwitama', 'XI-MN-3', 'Ngupil', 'Banyak bgt upilnya', 'Mandi wajib', 5, 'Jubaedah', 4, 'Suprayitno');
+(5, '2016-10-06', '23456789', 'Gilang Pasca Dwitama', 'XI-MN-3', 'Ngupil', 'Banyak bgt upilnya', 'Mandi wajib', 5, 'Jubaedah', 4, 'Suprayitno'),
+(6, '2016-09-17', '13434342', 'Komeng', 'XII-PM-6', 'Belum Sunat', 'Belum sunat sampai sma', 'Disunat', 6, 'Zulkifli', 8, 'Tini'),
+(7, '2016-08-04', '10132', 'Astri', 'XI-AP-1', 'Tekling', 'Tekling Sahabat sendiri', 'Kebiri', 7, 'Arief Rahman', 5, 'Jubaedah'),
+(8, '2016-07-14', '10113403', 'Andre Khong-guan', 'XII-MM-2', 'Maling Kotak Infaq', 'Kotak Infaq Masjid', 'Disentil', 8, 'Tini', 3, 'Iman'),
+(9, '2016-11-02', '11111', 'A', 'XII-MM-2', 'Telat', 'Telat 2 jam', 'disuruh pulang', 7, 'Arief Rahman', 4, 'Suprayitno'),
+(10, '2016-09-01', '10132', 'Astri', 'XI-AP-1', 'hehe', 'hehe', 'hehe', 3, 'Iman', 8, 'Tini');
 
 -- --------------------------------------------------------
 
@@ -91,9 +98,14 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`nis`, `nama`, `kelas`, `jurusan`) VALUES
+('10113403', 'Andre Khong-guan', 'XII-MM-2', 'Multimedia'),
+('10132', 'Astri', 'XI-AP-1', 'Administrasi Perkantoran'),
+('11111', 'A', 'XII-MM-2', 'Multimedia'),
 ('13434342', 'Komeng', 'XII-PM-6', 'Pemasaran'),
+('22222', 'B', 'XII-MM-2', 'Multimedia'),
 ('22345678', 'Akida doang', 'XI-MN-3', 'Manajemen'),
 ('23456789', 'Gilang Pasca Dwitama', 'XI-MN-3', 'Manajemen'),
+('33333', 'C', 'XII-MM-2', 'Multimedia'),
 ('3354222', 'Bin Idris', 'XI-UPW-4', 'Usaha Perjalanan Wisata'),
 ('76543210', 'Zlatan Ibrahimovic', 'XII-PM-6', 'Pemasaran'),
 ('98765432', 'Paul Labile Pogba', 'XI-MM-3', 'Multimedia');
@@ -128,12 +140,12 @@ ALTER TABLE `siswa`
 -- AUTO_INCREMENT for table `guru`
 --
 ALTER TABLE `guru`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT for table `piket`
 --
 ALTER TABLE `piket`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

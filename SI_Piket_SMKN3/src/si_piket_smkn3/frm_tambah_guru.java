@@ -5,10 +5,21 @@
  */
 package si_piket_smkn3;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import javax.swing.JFileChooser;
 
 /**
  *
@@ -25,6 +36,11 @@ public class frm_tambah_guru extends javax.swing.JFrame {
     String driver, database, user, pass;
     Object tabel;
     
+    Vector dataholder;
+    String nama_file;
+    String nip,nama,mata_pelajaran;
+    public static int status;
+    
     public frm_tambah_guru() {
         initComponents();
         
@@ -35,6 +51,77 @@ public class frm_tambah_guru extends javax.swing.JFrame {
         pass = dbsetting.SettingPanel("DBPassword");
     }
 
+    public static Vector read(String fileName)    {
+        Vector cellVectorHolder = new Vector();
+        try{
+            FileInputStream myInput = new FileInputStream(fileName);
+            //POIFSFileSystem myFileSystem = new POIFSFileSystem(myInput);
+            XSSFWorkbook myWorkBook = new XSSFWorkbook(myInput);
+            XSSFSheet mySheet = myWorkBook.getSheetAt(0);
+            Iterator rowIter = mySheet.rowIterator();
+            while(rowIter.hasNext()){
+                XSSFRow myRow = (XSSFRow) rowIter.next();
+                Iterator cellIter = myRow.cellIterator();
+                //Vector cellStoreVector=new Vector();
+                List list = new ArrayList();
+                while(cellIter.hasNext()){
+                    XSSFCell myCell = (XSSFCell) cellIter.next();
+                    list.add(myCell);
+                }
+                cellVectorHolder.addElement(list);
+            }
+        }catch (Exception e){e.printStackTrace(); }
+        return cellVectorHolder;
+    }
+    private void saveToDatabase(Vector dataHolder){
+        nip="";
+        nama="";
+        mata_pelajaran="";
+        
+        System.out.println(dataHolder);
+
+        for(Iterator iterator = dataHolder.iterator();iterator.hasNext();) {
+            List list = (List) iterator.next();
+            nip = list.get(0).toString();
+            nama = list.get(1).toString();
+            mata_pelajaran = list.get(2).toString();
+            
+
+            try {
+                    Class.forName(driver);
+                Connection kon = DriverManager.getConnection(
+                    database,
+                    user,
+                    pass);
+                Statement stt = kon.createStatement();
+                String SQL = "insert into guru (id,"
+                + "nip,"
+                + "nama,"
+                + "mata_pelajaran)"
+                + "values"
+                
+                + "( NULL,"
+                + " '"+nip+"',"
+                + " '"+nama+"',"
+                + " '"+mata_pelajaran+"')";              
+
+                stt.executeUpdate(SQL);
+                stt.close();
+                kon.close();
+                status = 2;
+            } catch (Exception ex)
+            {
+                status = 3;
+                JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
+        }
+        if (status == 2) {
+            JOptionPane.showMessageDialog(null, "Data Siswa Telah Berhasil Diimpor");
+        }
+    }
+    
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -54,6 +141,7 @@ public class frm_tambah_guru extends javax.swing.JFrame {
         txt_nip = new javax.swing.JTextField();
         txt_nama = new javax.swing.JTextField();
         txt_mata_pelajaran = new javax.swing.JTextField();
+        btn_import_guru = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -103,7 +191,7 @@ public class frm_tambah_guru extends javax.swing.JFrame {
                     .addComponent(txt_nama, javax.swing.GroupLayout.DEFAULT_SIZE, 189, Short.MAX_VALUE)
                     .addComponent(txt_nip)
                     .addComponent(txt_mata_pelajaran))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(39, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -123,6 +211,13 @@ public class frm_tambah_guru extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btn_import_guru.setText("Import Dari Excel");
+        btn_import_guru.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_import_guruActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -134,11 +229,13 @@ public class frm_tambah_guru extends javax.swing.JFrame {
                     .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
-                .addGap(102, 102, 102)
+                .addGap(50, 50, 50)
                 .addComponent(btn_tambah1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(103, Short.MAX_VALUE))
+                .addComponent(btn_batal, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_import_guru)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,7 +247,8 @@ public class frm_tambah_guru extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_batal)
-                    .addComponent(btn_tambah1))
+                    .addComponent(btn_tambah1)
+                    .addComponent(btn_import_guru))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -241,6 +339,17 @@ public class frm_tambah_guru extends javax.swing.JFrame {
         
     }//GEN-LAST:event_formWindowClosed
 
+    private void btn_import_guruActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_import_guruActionPerformed
+        // TODO add your handling code here:
+        JFileChooser filechooser = new JFileChooser();
+        filechooser.showOpenDialog(null);
+        File x_file = filechooser.getSelectedFile();
+        nama_file = x_file.getAbsolutePath();
+        
+        dataholder = read(nama_file);
+        saveToDatabase(dataholder);     
+    }//GEN-LAST:event_btn_import_guruActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -278,6 +387,7 @@ public class frm_tambah_guru extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_batal;
+    private javax.swing.JButton btn_import_guru;
     private javax.swing.JButton btn_tambah1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
