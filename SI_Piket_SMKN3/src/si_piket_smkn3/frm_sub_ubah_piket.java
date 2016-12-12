@@ -138,6 +138,7 @@ public class frm_sub_ubah_piket extends javax.swing.JFrame {
         btn_lihat_guru_1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setResizable(false);
 
         btn_simpan.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
         btn_simpan.setText("Simpan");

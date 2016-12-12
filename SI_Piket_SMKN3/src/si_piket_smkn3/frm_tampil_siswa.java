@@ -22,6 +22,8 @@ public class frm_tampil_siswa extends javax.swing.JFrame {
     koneksi dbsetting;
     String driver, database, user, pass;
     Object tabel;
+    
+    
     /**
      * Creates new form frm_tampil_siswa
      */
@@ -115,6 +117,7 @@ public class frm_tampil_siswa extends javax.swing.JFrame {
         tbl_siswa = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);

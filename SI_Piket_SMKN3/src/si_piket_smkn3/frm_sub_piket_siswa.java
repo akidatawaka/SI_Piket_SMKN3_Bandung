@@ -31,7 +31,6 @@ public class frm_sub_piket_siswa extends javax.swing.JFrame {
     String driver, database, user, pass;
     Object tabel;
     String nis, nama_siswa, kelas_siswa;
-    data_piket data_piket1 = new data_piket();
     public static int status;
     
     public frm_sub_piket_siswa() {
@@ -130,6 +129,7 @@ public class frm_sub_piket_siswa extends javax.swing.JFrame {
         btn_tampil = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);

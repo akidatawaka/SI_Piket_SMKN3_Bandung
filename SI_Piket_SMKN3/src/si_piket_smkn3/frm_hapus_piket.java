@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
+import static si_piket_smkn3.frm_tambah_piket.status_login;
 
 /**
  *
@@ -27,6 +28,9 @@ public class frm_hapus_piket extends javax.swing.JFrame {
     Object tabel;
     
     String id, nama_siswa;
+    
+    public static String status_login;
+    frm_utama utama = new frm_utama();
     
     public frm_hapus_piket() {
         initComponents();
@@ -137,6 +141,7 @@ public class frm_hapus_piket extends javax.swing.JFrame {
         btn_pilih = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -336,7 +341,16 @@ public class frm_hapus_piket extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        frm_utama utama = new frm_utama();
+        switch (status_login) {
+            case "piket":
+                status_login = frm_utama.status_login;
+                frm_utama.jMenu1.setEnabled(false);
+                frm_utama.jMenu2.setEnabled(false);
+                break;
+            case "admin":
+                status_login = frm_utama.status_login;
+                break;
+        }
         utama.setVisible(true);
     }//GEN-LAST:event_formWindowClosed
 

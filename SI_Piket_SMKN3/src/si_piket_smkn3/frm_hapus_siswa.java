@@ -26,6 +26,8 @@ public class frm_hapus_siswa extends javax.swing.JFrame {
     String driver, database, user, pass;
     Object tabel;
     
+    
+    
     public frm_hapus_siswa() {
         initComponents();
         
@@ -117,6 +119,7 @@ public class frm_hapus_siswa extends javax.swing.JFrame {
         btn_hapus = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);

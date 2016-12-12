@@ -25,11 +25,12 @@ public class frm_utama extends javax.swing.JFrame {
      */
     
     frm_ubah_guru ubah_guru = new frm_ubah_guru();
+    public static String status_login;
     
     public frm_utama() {
         initComponents();
         tampilGbrJabar();
-        tampilGbrSmkn3();
+        tampilGbrSmkn3();               
     }
 
     /**
@@ -105,6 +106,7 @@ public class frm_utama extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Informasi Piket SMKN 3 Bandung");
+        setResizable(false);
 
         gbr_jabar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -252,7 +254,7 @@ public class frm_utama extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(84, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(gbr_jabar, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(gbr_smkn3, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(79, 79, 79))
@@ -336,6 +338,7 @@ public class frm_utama extends javax.swing.JFrame {
 
     private void jMenuItem_tambah_piketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tambah_piketActionPerformed
         // TODO add your handling code here:
+        frm_tambah_piket.status_login = status_login;
         frm_tambah_piket tambah_piket = new frm_tambah_piket();
         tambah_piket.setVisible(true);
         
@@ -344,6 +347,7 @@ public class frm_utama extends javax.swing.JFrame {
 
     private void jMenuItem_ubah_piketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ubah_piketActionPerformed
         // TODO add your handling code here:
+        frm_ubah_piket.status_login = status_login;
         frm_ubah_piket ubah_piket = new frm_ubah_piket();
         ubah_piket.setVisible(true);
         
@@ -352,6 +356,7 @@ public class frm_utama extends javax.swing.JFrame {
 
     private void jMenuItem_hapus_piketActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_hapus_piketActionPerformed
         // TODO add your handling code here:
+        frm_hapus_piket.status_login = status_login;
         frm_hapus_piket hapus_piket = new frm_hapus_piket();
         hapus_piket.setVisible(true);
         
@@ -360,17 +365,17 @@ public class frm_utama extends javax.swing.JFrame {
 
     private void jMenuItem_tampilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tampilActionPerformed
         // TODO add your handling code here:
+        frm_tampil_piket.status_login = status_login;
         frm_tampil_piket tampil_piketnya = new frm_tampil_piket();
         tampil_piketnya.setVisible(true);
-        
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem_tampilActionPerformed
 
     private void jMenuItem_tampil_tanggalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_tampil_tanggalActionPerformed
         // TODO add your handling code here:
+        frm_tampil_piket_tanggal.status_login = status_login;
         frm_tampil_piket_tanggal tampil_piket_tanggal = new frm_tampil_piket_tanggal();
         tampil_piket_tanggal.setVisible(true);
-        
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem_tampil_tanggalActionPerformed
 
@@ -413,8 +418,8 @@ public class frm_utama extends javax.swing.JFrame {
     private javax.swing.JLabel gbr_jabar;
     private javax.swing.JLabel gbr_smkn3;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
+    public static javax.swing.JMenu jMenu1;
+    public static javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuItem jMenuItem4;

@@ -31,6 +31,9 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     String tanggal,nis, nama_siswa,kelas_siswa,id_guru1,nama_guru1,id_guru2,nama_guru2,
            jenis_pelanggaran,keterangan,tindak_lanjut;
     
+    public static String status_login;
+    frm_utama utama = new frm_utama();
+    
     public static void generateSiswa(String nis, String nama, String kelas) {
         txt_nis.setText(nis);
         txt_nama_siswa.setText(nama);
@@ -55,6 +58,8 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         database = dbsetting.SettingPanel("DBDatabase");
         user = dbsetting.SettingPanel("DBUsername");
         pass = dbsetting.SettingPanel("DBPassword");
+        
+        txt_nama_siswa.setText(status_login);
     }
     
     /**
@@ -114,6 +119,7 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         jRadioButton1.setText("jRadioButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -515,10 +521,20 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        frm_utama utama = new frm_utama();
+        switch (status_login) {
+            case "piket":
+                status_login = frm_utama.status_login;
+                frm_utama.jMenu1.setEnabled(false);
+                frm_utama.jMenu2.setEnabled(false);
+                break;
+            case "admin":
+                status_login = frm_utama.status_login;
+                break;
+        }
         utama.setVisible(true);
         
         this.setVisible(false);
+        
     }//GEN-LAST:event_formWindowClosed
 
     private void btn_lihat_guru_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihat_guru_1ActionPerformed

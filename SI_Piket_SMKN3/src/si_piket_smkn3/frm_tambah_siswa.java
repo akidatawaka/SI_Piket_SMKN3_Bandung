@@ -40,6 +40,8 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
     String driver, database, user, pass;
     Object tabel;
     
+    
+    
     Vector dataholder;
     
     public static int status;
@@ -58,6 +60,8 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         database = dbsetting.SettingPanel("DBDatabase");
         user = dbsetting.SettingPanel("DBUsername");
         pass = dbsetting.SettingPanel("DBPassword");
+        
+        //txt_nama.setText(this.status_login);
         initComponents();
     }
     
@@ -158,6 +162,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         btn_import_siswa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);

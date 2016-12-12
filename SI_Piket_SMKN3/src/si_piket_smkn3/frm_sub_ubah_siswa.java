@@ -121,6 +121,7 @@ public class frm_sub_ubah_siswa extends javax.swing.JFrame {
         btn_pilih = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 

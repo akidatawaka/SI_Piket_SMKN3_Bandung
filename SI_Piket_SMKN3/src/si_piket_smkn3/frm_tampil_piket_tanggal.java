@@ -49,6 +49,9 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
     
     public static String SQL;
     
+    public static String status_login;
+    frm_utama utama = new frm_utama();
+    
     
     public frm_tampil_piket_tanggal() {
         initComponents();
@@ -238,6 +241,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
                 formWindowClosed(evt);
@@ -347,10 +351,17 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        frm_utama utama = new frm_utama();
+        switch (status_login) {
+            case "piket":
+                status_login = frm_utama.status_login;
+                frm_utama.jMenu1.setEnabled(false);
+                frm_utama.jMenu2.setEnabled(false);
+                break;
+            case "admin":
+                status_login = frm_utama.status_login;
+                break;
+        }
         utama.setVisible(true);
-        
-        this.setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
     private void btn_tampilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tampilActionPerformed
