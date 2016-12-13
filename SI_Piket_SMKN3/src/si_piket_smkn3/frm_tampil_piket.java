@@ -224,6 +224,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
         tbl_piket = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tampil Data Piket Berdasarkan Nama");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {

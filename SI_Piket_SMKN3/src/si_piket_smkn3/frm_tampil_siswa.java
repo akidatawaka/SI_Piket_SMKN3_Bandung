@@ -117,6 +117,7 @@ public class frm_tampil_siswa extends javax.swing.JFrame {
         tbl_siswa = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Tampil Data Siswa");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosed(java.awt.event.WindowEvent evt) {
