@@ -354,8 +354,8 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         switch (status_login) {
             case "piket":
                 status_login = frm_utama.status_login;
-                frm_utama.jMenu1.setEnabled(false);
-                frm_utama.jMenu2.setEnabled(false);
+                frm_utama.menu_siswa.setEnabled(false);
+                frm_utama.menu_guru.setEnabled(false);
                 break;
             case "admin":
                 status_login = frm_utama.status_login;

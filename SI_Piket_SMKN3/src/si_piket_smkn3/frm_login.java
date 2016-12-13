@@ -44,6 +44,11 @@ public class frm_login extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Lucida Grande", 0, 16)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -136,8 +141,8 @@ public class frm_login extends javax.swing.JFrame {
             status_login = "piket";
             frm_utama.status_login = this.status_login;
             utama.setVisible(true);
-            frm_utama.jMenu1.setEnabled(false);
-            frm_utama.jMenu2.setEnabled(false);
+            frm_utama.menu_siswa.setEnabled(false);
+            frm_utama.menu_guru.setEnabled(false);
             status_login = "piket";
             this.setVisible(false);
         } else {
@@ -148,6 +153,17 @@ public class frm_login extends javax.swing.JFrame {
             txt_username.requestFocus();
         }
     }//GEN-LAST:event_btn_loginActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int selectedOption = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin keluar ?",
+                "Konfirmasi Keluar dari Aplikasi",JOptionPane.YES_NO_OPTION);
+        if(selectedOption == JOptionPane.YES_OPTION) {
+            System.exit(0);
+        } else {
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
+        }
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments

@@ -11,6 +11,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 
 
@@ -81,32 +82,59 @@ public class frm_utama extends javax.swing.JFrame {
     private void initComponents() {
 
         jMenuItem4 = new javax.swing.JMenuItem();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu4 = new javax.swing.JMenu();
+        jMenu5 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuBar3 = new javax.swing.JMenuBar();
+        jMenu6 = new javax.swing.JMenu();
+        jMenu7 = new javax.swing.JMenu();
         gbr_jabar = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         gbr_smkn3 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
+        menu_siswa = new javax.swing.JMenu();
         jMenuItem_tampil_siswa = new javax.swing.JMenuItem();
         jMenuItem_tambah_siswa = new javax.swing.JMenuItem();
         jMenuItem_ubah_siswa = new javax.swing.JMenuItem();
         jMenuItem_hapus_siswa = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
+        menu_guru = new javax.swing.JMenu();
         jMenuItem_tampil_guru = new javax.swing.JMenuItem();
         jMenuItem_tambah_guru = new javax.swing.JMenuItem();
         jMenuItem_ubah_guru = new javax.swing.JMenuItem();
         jMenuItem_hapus_guru = new javax.swing.JMenuItem();
-        jMenu3 = new javax.swing.JMenu();
+        menu_piket = new javax.swing.JMenu();
         jMenuItem_tambah_piket = new javax.swing.JMenuItem();
         jMenuItem_ubah_piket = new javax.swing.JMenuItem();
         jMenuItem_hapus_piket = new javax.swing.JMenuItem();
         jMenuItem_tampil = new javax.swing.JMenuItem();
         jMenuItem_tampil_tanggal = new javax.swing.JMenuItem();
+        menu_logout = new javax.swing.JMenu();
 
         jMenuItem4.setText("jMenuItem4");
+
+        jMenu4.setText("File");
+        jMenuBar2.add(jMenu4);
+
+        jMenu5.setText("Edit");
+        jMenuBar2.add(jMenu5);
+
+        jMenuItem1.setText("jMenuItem1");
+
+        jMenu6.setText("File");
+        jMenuBar3.add(jMenu6);
+
+        jMenu7.setText("Edit");
+        jMenuBar3.add(jMenu7);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistem Informasi Piket SMKN 3 Bandung");
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         gbr_jabar.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
@@ -116,7 +144,7 @@ public class frm_utama extends javax.swing.JFrame {
 
         gbr_smkn3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
-        jMenu1.setText("Siswa");
+        menu_siswa.setText("Siswa");
 
         jMenuItem_tampil_siswa.setText("Tampil Data Siswa");
         jMenuItem_tampil_siswa.addActionListener(new java.awt.event.ActionListener() {
@@ -124,7 +152,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_tampil_siswaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem_tampil_siswa);
+        menu_siswa.add(jMenuItem_tampil_siswa);
 
         jMenuItem_tambah_siswa.setText("Tambah Data Siswa");
         jMenuItem_tambah_siswa.addActionListener(new java.awt.event.ActionListener() {
@@ -132,7 +160,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_tambah_siswaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem_tambah_siswa);
+        menu_siswa.add(jMenuItem_tambah_siswa);
 
         jMenuItem_ubah_siswa.setText("Ubah Data Siswa");
         jMenuItem_ubah_siswa.addActionListener(new java.awt.event.ActionListener() {
@@ -140,7 +168,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_ubah_siswaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem_ubah_siswa);
+        menu_siswa.add(jMenuItem_ubah_siswa);
 
         jMenuItem_hapus_siswa.setText("Hapus Data Siswa");
         jMenuItem_hapus_siswa.addActionListener(new java.awt.event.ActionListener() {
@@ -148,11 +176,11 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_hapus_siswaActionPerformed(evt);
             }
         });
-        jMenu1.add(jMenuItem_hapus_siswa);
+        menu_siswa.add(jMenuItem_hapus_siswa);
 
-        jMenuBar1.add(jMenu1);
+        jMenuBar1.add(menu_siswa);
 
-        jMenu2.setText("Guru");
+        menu_guru.setText("Guru");
 
         jMenuItem_tampil_guru.setText("Tampil Data Guru");
         jMenuItem_tampil_guru.addActionListener(new java.awt.event.ActionListener() {
@@ -160,7 +188,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_tampil_guruActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem_tampil_guru);
+        menu_guru.add(jMenuItem_tampil_guru);
 
         jMenuItem_tambah_guru.setText("Tambah Data Guru");
         jMenuItem_tambah_guru.addActionListener(new java.awt.event.ActionListener() {
@@ -168,7 +196,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_tambah_guruActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem_tambah_guru);
+        menu_guru.add(jMenuItem_tambah_guru);
 
         jMenuItem_ubah_guru.setText("Ubah Data Guru");
         jMenuItem_ubah_guru.addActionListener(new java.awt.event.ActionListener() {
@@ -176,7 +204,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_ubah_guruActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem_ubah_guru);
+        menu_guru.add(jMenuItem_ubah_guru);
 
         jMenuItem_hapus_guru.setText("Hapus Data Guru");
         jMenuItem_hapus_guru.addActionListener(new java.awt.event.ActionListener() {
@@ -184,11 +212,11 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_hapus_guruActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem_hapus_guru);
+        menu_guru.add(jMenuItem_hapus_guru);
 
-        jMenuBar1.add(jMenu2);
+        jMenuBar1.add(menu_guru);
 
-        jMenu3.setText("Piket");
+        menu_piket.setText("Piket");
 
         jMenuItem_tambah_piket.setText("Tambah Data Piket");
         jMenuItem_tambah_piket.addActionListener(new java.awt.event.ActionListener() {
@@ -196,7 +224,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_tambah_piketActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem_tambah_piket);
+        menu_piket.add(jMenuItem_tambah_piket);
 
         jMenuItem_ubah_piket.setText("Ubah Data Piket");
         jMenuItem_ubah_piket.addActionListener(new java.awt.event.ActionListener() {
@@ -204,7 +232,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_ubah_piketActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem_ubah_piket);
+        menu_piket.add(jMenuItem_ubah_piket);
 
         jMenuItem_hapus_piket.setText("Hapus Data Piket");
         jMenuItem_hapus_piket.addActionListener(new java.awt.event.ActionListener() {
@@ -212,7 +240,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_hapus_piketActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem_hapus_piket);
+        menu_piket.add(jMenuItem_hapus_piket);
 
         jMenuItem_tampil.setText("Tampil Data Piket");
         jMenuItem_tampil.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +248,7 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_tampilActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem_tampil);
+        menu_piket.add(jMenuItem_tampil);
 
         jMenuItem_tampil_tanggal.setText("Tampil Data Piket Berdasarkan Tanggal");
         jMenuItem_tampil_tanggal.addActionListener(new java.awt.event.ActionListener() {
@@ -228,9 +256,17 @@ public class frm_utama extends javax.swing.JFrame {
                 jMenuItem_tampil_tanggalActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenuItem_tampil_tanggal);
+        menu_piket.add(jMenuItem_tampil_tanggal);
 
-        jMenuBar1.add(jMenu3);
+        jMenuBar1.add(menu_piket);
+
+        menu_logout.setText("Logout");
+        menu_logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                menu_logoutMouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(menu_logout);
 
         setJMenuBar(jMenuBar1);
 
@@ -379,6 +415,31 @@ public class frm_utama extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_jMenuItem_tampil_tanggalActionPerformed
 
+    private void menu_logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menu_logoutMouseClicked
+        // TODO add your handling code here:
+        int selectedOption = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin Logout ?","Konfirmasi Logout",JOptionPane.YES_NO_OPTION);
+        if (selectedOption == JOptionPane.YES_OPTION) {            
+                status_login = null;
+                frm_login login = new frm_login();
+                login.setVisible(true);
+                this.setVisible(false);                
+            }
+        else {
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);                       
+        }
+    }//GEN-LAST:event_menu_logoutMouseClicked
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int selectedOption = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin Logout dan Keluar ?","Konfirmasi Logout dan Keluar",JOptionPane.YES_NO_OPTION);
+        if (selectedOption == JOptionPane.YES_OPTION) {            
+                System.exit(0);
+            }
+        else {
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);                       
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -418,10 +479,14 @@ public class frm_utama extends javax.swing.JFrame {
     private javax.swing.JLabel gbr_jabar;
     private javax.swing.JLabel gbr_smkn3;
     private javax.swing.JLabel jLabel2;
-    public static javax.swing.JMenu jMenu1;
-    public static javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu5;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuBar jMenuBar3;
+    private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JMenuItem jMenuItem_hapus_guru;
     private javax.swing.JMenuItem jMenuItem_hapus_piket;
@@ -436,5 +501,9 @@ public class frm_utama extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_ubah_guru;
     private javax.swing.JMenuItem jMenuItem_ubah_piket;
     private javax.swing.JMenuItem jMenuItem_ubah_siswa;
+    public static javax.swing.JMenu menu_guru;
+    private javax.swing.JMenu menu_logout;
+    private javax.swing.JMenu menu_piket;
+    public static javax.swing.JMenu menu_siswa;
     // End of variables declaration//GEN-END:variables
 }
