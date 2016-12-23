@@ -228,6 +228,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         btn_tampil = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_piket = new javax.swing.JTable();
+        btn_kembali = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -244,12 +245,12 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         setTitle("Tampil Data Piket Berdasarkan Tanggal");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Data Piket");
 
@@ -319,51 +320,49 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tbl_piket);
 
+        btn_kembali.setBackground(new java.awt.Color(255, 204, 255));
+        btn_kembali.setText("Kembali Ke Menu Utama");
+        btn_kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap())
-            .addGroup(layout.createSequentialGroup()
                 .addGap(349, 349, 349)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_kembali)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
+                .addComponent(btn_kembali, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(13, 13, 13)
-                .addComponent(jScrollPane1)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
-        switch (status_login) {
-            case "piket":
-                status_login = frm_utama.status_login;
-                frm_utama.menu_siswa.setEnabled(false);
-                frm_utama.menu_guru.setEnabled(false);
-                break;
-            case "admin":
-                status_login = frm_utama.status_login;
-                break;
-        }
-        utama.setVisible(true);
-    }//GEN-LAST:event_formWindowClosed
 
     private void btn_tampilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_tampilActionPerformed
         // TODO add your handling code here:
@@ -427,6 +426,33 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Data Piket Berhasil Di Ekspor !");
     }//GEN-LAST:event_btn_export_excelActionPerformed
 
+    private void btn_kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliActionPerformed
+        // TODO add your handling code here:
+        switch (status_login) {
+            case "piket":
+                status_login = frm_utama.status_login;
+                frm_utama.menu_siswa.setEnabled(false);
+                frm_utama.menu_guru.setEnabled(false);
+                break;
+            case "admin":
+                status_login = frm_utama.status_login;
+                break;
+        }
+        utama.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_kembaliActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int selectedOption = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin Logout dan Keluar ?","Konfirmasi Logout dan Keluar",JOptionPane.YES_NO_OPTION);
+        if (selectedOption == JOptionPane.YES_OPTION) {            
+                System.exit(0);
+            }
+        else {
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);                       
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -441,6 +467,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_export_excel;
+    private javax.swing.JButton btn_kembali;
     private javax.swing.JButton btn_tampil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -58,8 +58,6 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         database = dbsetting.SettingPanel("DBDatabase");
         user = dbsetting.SettingPanel("DBUsername");
         pass = dbsetting.SettingPanel("DBPassword");
-        
-        txt_nama_siswa.setText(status_login);
     }
     
     /**
@@ -115,6 +113,7 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         btn_simpan = new javax.swing.JButton();
         jPanel5 = new javax.swing.JPanel();
         txt_tanggal = new com.toedter.calendar.JDateChooser();
+        btn_kembali = new javax.swing.JButton();
 
         jRadioButton1.setText("jRadioButton1");
 
@@ -122,12 +121,12 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         setTitle("Tambah Data Piket");
         setResizable(false);
         addWindowListener(new java.awt.event.WindowAdapter() {
-            public void windowClosed(java.awt.event.WindowEvent evt) {
-                formWindowClosed(evt);
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Lucida Grande", 0, 14)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Lucida Grande", 1, 14)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Tambah Data Piket");
 
@@ -452,18 +451,18 @@ public class frm_tambah_piket extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
+        btn_kembali.setBackground(new java.awt.Color(255, 204, 204));
+        btn_kembali.setText("Kembali Ke Menu Utama");
+        btn_kembali.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_kembaliActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
@@ -479,11 +478,26 @@ public class frm_tambah_piket extends javax.swing.JFrame {
                 .addGap(227, 227, 227)
                 .addComponent(btn_simpan)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(6, 6, 6)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_kembali)))
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addGap(5, 5, 5)
+                .addComponent(btn_kembali, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2)
                 .addGap(6, 6, 6)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -520,36 +534,16 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_lihat_siswaActionPerformed
 
     
-    private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
-        // TODO add your handling code here:
-        switch (status_login) {
-            case "piket":
-                status_login = frm_utama.status_login;
-                frm_utama.menu_siswa.setEnabled(false);
-                frm_utama.menu_guru.setEnabled(false);
-                break;
-            case "admin":
-                status_login = frm_utama.status_login;
-                break;
-        }
-        utama.setVisible(true);
-        
-        this.setVisible(false);
-        
-    }//GEN-LAST:event_formWindowClosed
-
     private void btn_lihat_guru_1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihat_guru_1ActionPerformed
         // TODO add your handling code here:
         frm_sub_piket_guru1 piket_guru1 = new frm_sub_piket_guru1();
         piket_guru1.status = 1;
-        piket_guru1.setVisible(true);
-        
-       // this.setVisible(false);
+        piket_guru1.setVisible(true); 
     }//GEN-LAST:event_btn_lihat_guru_1ActionPerformed
 
     private void btn_lihat_guru_2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_lihat_guru_2ActionPerformed
         // TODO add your handling code here:
-                frm_sub_piket_guru1 piket_guru1 = new frm_sub_piket_guru1();
+        frm_sub_piket_guru1 piket_guru1 = new frm_sub_piket_guru1();
         piket_guru1.status = 2;
         piket_guru1.setVisible(true);
     }//GEN-LAST:event_btn_lihat_guru_2ActionPerformed
@@ -637,6 +631,33 @@ public class frm_tambah_piket extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btn_simpanActionPerformed
 
+    private void btn_kembaliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_kembaliActionPerformed
+        // TODO add your handling code here:
+        switch (status_login) {
+            case "piket":
+                status_login = frm_utama.status_login;
+                frm_utama.menu_siswa.setEnabled(false);
+                frm_utama.menu_guru.setEnabled(false);
+                break;
+            case "admin":
+                status_login = frm_utama.status_login;
+                break;
+        }
+        utama.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_btn_kembaliActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        // TODO add your handling code here:
+        int selectedOption = JOptionPane.showConfirmDialog(null, "Apakah anda yakin ingin Logout dan Keluar ?","Konfirmasi Logout dan Keluar",JOptionPane.YES_NO_OPTION);
+        if (selectedOption == JOptionPane.YES_OPTION) {            
+                System.exit(0);
+            }
+        else {
+            setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);                       
+        }
+    }//GEN-LAST:event_formWindowClosing
+
     /**
      * @param args the command line arguments
      */
@@ -673,6 +694,7 @@ public class frm_tambah_piket extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_kembali;
     private javax.swing.JButton btn_lihat_guru_1;
     private javax.swing.JButton btn_lihat_guru_2;
     private javax.swing.JButton btn_lihat_siswa;
