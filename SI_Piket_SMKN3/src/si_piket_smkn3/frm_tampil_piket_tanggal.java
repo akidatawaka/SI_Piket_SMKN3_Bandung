@@ -24,7 +24,15 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.swing.JFileChooser;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 /**
  *
@@ -46,6 +54,10 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
     String format_tanggal = "yyyy-MM-dd";
     SimpleDateFormat fm = new SimpleDateFormat(format_tanggal);
     String tanggal;
+    
+    String format_tanggal_sekarang = "dd-MMM-yyyy";
+    SimpleDateFormat tanggal_biasa = new SimpleDateFormat(format_tanggal_sekarang);
+    String tanggal_sekarang;
     
     public static String SQL;
     
@@ -83,8 +95,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                       tableModel.getColumnName(2),tableModel.getColumnName(3),
                       tableModel.getColumnName(4),tableModel.getColumnName(5),
                       tableModel.getColumnName(6),tableModel.getColumnName(7),
-                      tableModel.getColumnName(8),tableModel.getColumnName(9),
-                      tableModel.getColumnName(10),tableModel.getColumnName(11)}
+                      tableModel.getColumnName(8)}
         );
         for (int i = 1; i < tableModel.getRowCount()+1; i++) {            
         
@@ -92,8 +103,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                                   getCellValue(i-1, 2),getCellValue(i-1, 3),
                                   getCellValue(i-1, 4),getCellValue(i-1, 5),
                                   getCellValue(i-1, 6),getCellValue(i-1, 7),
-                                  getCellValue(i-1, 8),getCellValue(i-1, 9),
-                                  getCellValue(i-1, 10),getCellValue(i-1, 11),
+                                  getCellValue(i-1, 8),
         });
         }
         
@@ -139,17 +149,15 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         return new javax.swing.table.DefaultTableModel
         (
                 new Object[][] {},
-                new String[]{"ID",
+                new String[]{
                              "Tanggal",
                              "NIS",
                              "Nama Siswa",
                              "Kelas Siswa",
                              "Jenis Pelanggaran",
                              "Keterangan",
-                             "Tindak Lanjut",
-                             "ID Guru 1",
-                             "Nama Guru 1",
-                             "ID Guru 2",
+                             "Tindak Lanjut",                           
+                             "Nama Guru 1",                            
                              "Nama Guru 2"}
         )
         //disable perubahan pada grid
@@ -158,7 +166,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
             {
                 false, false, false, false,
                 false, false, false, false,
-                false, false, false, false
+                false
             };
             
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -180,7 +188,9 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                    user,
                    pass);
            Statement stt=kon.createStatement();
-           String SQL = "select * from piket";
+           String SQL = "SELECT tanggal,nis,nama_siswa,kelas_siswa,"
+                   + "jenis_pelanggaran,keterangan,tindak_lanjut,nama_guru_1,nama_guru_2 "
+                   + "from piket";
            ResultSet res = stt.executeQuery(SQL);
            while(res.next()){
                data[0] = res.getString(1);
@@ -192,9 +202,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                data[6] = res.getString(7);
                data[7] = res.getString(8);  
                data[8] = res.getString(9);
-               data[9] = res.getString(10);
-               data[10] = res.getString(11);
-               data[11] = res.getString(12); 
+               
                tableModel.addRow(data);
                
            }
@@ -226,6 +234,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         txt_tanggal = new com.toedter.calendar.JDateChooser();
         btn_export_excel = new javax.swing.JButton();
         btn_tampil = new javax.swing.JButton();
+        btn_laporan = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_piket = new javax.swing.JTable();
         btn_kembali = new javax.swing.JButton();
@@ -274,24 +283,32 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
             }
         });
 
+        btn_laporan.setText("Cetak Laporan");
+        btn_laporan.setEnabled(false);
+        btn_laporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_laporanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txt_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(btn_tampil)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btn_export_excel)
-                        .addGap(82, 82, 82))))
+                .addComponent(btn_tampil)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_export_excel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_laporan)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(txt_tanggal, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,7 +320,8 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btn_export_excel)
-                    .addComponent(btn_tampil))
+                    .addComponent(btn_tampil)
+                    .addComponent(btn_laporan))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -333,10 +351,6 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(349, 349, 349)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
@@ -345,6 +359,10 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE)
                         .addComponent(btn_kembali)))
                 .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(349, 349, 349)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -377,7 +395,8 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                             user,
                             pass);
                     Statement stt = kon.createStatement();
-                        SQL = "SELECT *"
+                        SQL = "SELECT tanggal,nis,nama_siswa,kelas_siswa,"
+                            + "jenis_pelanggaran,keterangan,tindak_lanjut,nama_guru_1,nama_guru_2 "
                             + "FROM piket "
                             + "WHERE tanggal "
                             + "BETWEEN '"+tanggal+"' AND curdate();";
@@ -392,9 +411,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                data[6] = res.getString(7);
                data[7] = res.getString(8);  
                data[8] = res.getString(9);
-               data[9] = res.getString(10);
-               data[10] = res.getString(11);
-               data[11] = res.getString(12); 
+              
                tableModel.addRow(data);
             } 
             }
@@ -405,6 +422,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
                 
             }            
         btn_export_excel.setEnabled(true);
+        btn_laporan.setEnabled(true);
         
     }//GEN-LAST:event_btn_tampilActionPerformed
 
@@ -453,6 +471,29 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void btn_laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laporanActionPerformed
+        // TODO add your handling code here:
+         try {
+            //DefaultTableModel de = (DefaultTableModel) jTable1.getModel();
+             tanggal_sekarang = new SimpleDateFormat(format_tanggal_sekarang).format(txt_tanggal.getDate());
+             String title = "LAPORAN PIKET SMK NEGERI 3 BANDUNG PER-TANGGAL "+tanggal_sekarang;
+            JRTableModelDataSource datasource = new JRTableModelDataSource(tableModel);
+            String reportSource = "./example.jrxml";
+
+            JasperReport jr = JasperCompileManager.compileReport(reportSource);
+
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("title1", title);
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, params, datasource);
+
+
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btn_laporanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -468,6 +509,7 @@ public class frm_tampil_piket_tanggal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_export_excel;
     private javax.swing.JButton btn_kembali;
+    private javax.swing.JButton btn_laporan;
     private javax.swing.JButton btn_tampil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

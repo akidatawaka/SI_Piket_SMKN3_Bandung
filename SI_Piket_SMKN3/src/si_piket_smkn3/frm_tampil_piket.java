@@ -23,7 +23,16 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import javax.swing.JFileChooser;
 import java.io.File;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.table.DefaultTableModel;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRTableModelDataSource;
+import net.sf.jasperreports.view.JasperViewer;
 
 
 
@@ -67,17 +76,14 @@ public class frm_tampil_piket extends javax.swing.JFrame {
         return new javax.swing.table.DefaultTableModel
         (
                 new Object[][] {},
-                new String[]{"ID",
-                             "Tanggal",
+                new String[]{"Tanggal",
                              "NIS",
                              "Nama Siswa",
                              "Kelas Siswa",
                              "Jenis Pelanggaran",
                              "Keterangan",
                              "Tindak Lanjut",
-                             "ID Guru 1",
                              "Nama Guru 1",
-                             "ID Guru 2",
                              "Nama Guru 2"}
         )
         //disable perubahan pada grid
@@ -86,7 +92,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
             {
                 false, false, false, false,
                 false, false, false, false,
-                false, false, false, false
+                false
             };
             
             public boolean isCellEditable(int rowIndex, int columnIndex)
@@ -108,7 +114,9 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                    user,
                    pass);
            Statement stt=kon.createStatement();
-           String SQL = "select * from piket";
+           String SQL = "SELECT tanggal,nis,nama_siswa,kelas_siswa,"
+                   + "jenis_pelanggaran,keterangan,tindak_lanjut,nama_guru_1,nama_guru_2 "
+                   + "FROM piket";
            ResultSet res = stt.executeQuery(SQL);
            while(res.next()){
                data[0] = res.getString(1);
@@ -120,9 +128,6 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                data[6] = res.getString(7);
                data[7] = res.getString(8);  
                data[8] = res.getString(9);
-               data[9] = res.getString(10);
-               data[10] = res.getString(11);
-               data[11] = res.getString(12); 
                tableModel.addRow(data);
                
            }
@@ -155,8 +160,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                       tableModel.getColumnName(2),tableModel.getColumnName(3),
                       tableModel.getColumnName(4),tableModel.getColumnName(5),
                       tableModel.getColumnName(6),tableModel.getColumnName(7),
-                      tableModel.getColumnName(8),tableModel.getColumnName(9),
-                      tableModel.getColumnName(10),tableModel.getColumnName(11)}
+                      tableModel.getColumnName(8)}
         );
         for (int i = 1; i < tableModel.getRowCount()+1; i++) {            
         
@@ -164,8 +168,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                                   getCellValue(i-1, 2),getCellValue(i-1, 3),
                                   getCellValue(i-1, 4),getCellValue(i-1, 5),
                                   getCellValue(i-1, 6),getCellValue(i-1, 7),
-                                  getCellValue(i-1, 8),getCellValue(i-1, 9),
-                                  getCellValue(i-1, 10),getCellValue(i-1, 11),
+                                  getCellValue(i-1, 8),
         });
         }
         
@@ -219,6 +222,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
         txt_pencarian = new javax.swing.JTextField();
         btn_tampil = new javax.swing.JButton();
         btn_export = new javax.swing.JButton();
+        btn_laporan = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tbl_piket = new javax.swing.JTable();
@@ -258,6 +262,14 @@ public class frm_tampil_piket extends javax.swing.JFrame {
             }
         });
 
+        btn_laporan.setText("Cetak Laporan");
+        btn_laporan.setEnabled(false);
+        btn_laporan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_laporanActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -271,6 +283,8 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                 .addComponent(btn_tampil, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_export)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btn_laporan)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -281,7 +295,8 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                     .addComponent(jLabel1)
                     .addComponent(txt_pencarian, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btn_tampil)
-                    .addComponent(btn_export))
+                    .addComponent(btn_export)
+                    .addComponent(btn_laporan))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -317,20 +332,16 @@ public class frm_tampil_piket extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE))
-                        .addContainerGap())
+                    .addComponent(jLabel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 1085, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(245, 245, 245))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btn_kembali)
-                                .addContainerGap())))))
+                        .addGap(0, 890, Short.MAX_VALUE)
+                        .addComponent(btn_kembali)))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(142, 142, 142))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -360,7 +371,9 @@ public class frm_tampil_piket extends javax.swing.JFrame {
             Class.forName(driver);
             Connection kon = DriverManager.getConnection(database, user, pass);
             Statement stt = kon.createStatement();
-            String SQL = "select * from piket where nama_siswa like '%"
+            String SQL = "SELECT tanggal,nis,nama_siswa,kelas_siswa,"
+                    + "jenis_pelanggaran,keterangan,tindak_lanjut,nama_guru_1,nama_guru_2 "
+                    + "FROM piket where nama_siswa like '%"
             + txt_pencarian.getText()+"%'"
             +"or nama_guru_1 like '%"+txt_pencarian.getText()+"%'"
             +"or nama_guru_2 like '%"+txt_pencarian.getText()+"%'";
@@ -376,9 +389,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
                 data[6] = res.getString(7);
                 data[7] = res.getString(8);
                 data[8] = res.getString(9);
-                data[9] = res.getString(10);
-                data[10] = res.getString(11);
-                data[11] = res.getString(12);
+                
 
                 tableModel.addRow(data);
             }
@@ -389,6 +400,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, ex.getMessage(),"Error",JOptionPane.INFORMATION_MESSAGE);
         }
         btn_export.setEnabled(true);
+        btn_laporan.setEnabled(true);
     }//GEN-LAST:event_txt_pencarianKeyReleased
 
     private void btn_tampilMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_tampilMouseClicked
@@ -398,6 +410,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
         settableload();
         txt_pencarian.setRequestFocusEnabled(true);
         btn_export.setEnabled(false);
+        btn_laporan.setEnabled(false);
     }//GEN-LAST:event_btn_tampilMouseClicked
 
     private void btn_exportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exportActionPerformed
@@ -444,6 +457,27 @@ public class frm_tampil_piket extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void btn_laporanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_laporanActionPerformed
+        // TODO add your handling code here:
+        try {
+            //DefaultTableModel de = (DefaultTableModel) jTable1.getModel();
+            JRTableModelDataSource datasource = new JRTableModelDataSource(tableModel);
+            String reportSource = "./example.jrxml";
+
+            JasperReport jr = JasperCompileManager.compileReport(reportSource);
+
+            Map<String, Object> params = new HashMap<String, Object>();
+            params.put("title1", "LAPORAN PIKET SMK NEGERI 3 BANDUNG BERDASARKAN NAMA");
+
+            JasperPrint jp = JasperFillManager.fillReport(jr, params, datasource);
+
+
+            JasperViewer.viewReport(jp, false);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btn_laporanActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -482,6 +516,7 @@ public class frm_tampil_piket extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_export;
     private javax.swing.JButton btn_kembali;
+    private javax.swing.JButton btn_laporan;
     private javax.swing.JButton btn_tampil;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
