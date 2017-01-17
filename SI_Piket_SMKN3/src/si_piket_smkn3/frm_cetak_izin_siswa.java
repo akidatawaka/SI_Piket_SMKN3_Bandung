@@ -75,6 +75,7 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
         btn_kembali = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setTitle("Cetak Surat Izin Kelas Siswa");
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent evt) {
                 formWindowClosing(evt);
