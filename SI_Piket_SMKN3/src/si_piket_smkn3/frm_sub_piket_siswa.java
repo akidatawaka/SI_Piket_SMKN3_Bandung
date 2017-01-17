@@ -30,7 +30,7 @@ public class frm_sub_piket_siswa extends javax.swing.JFrame {
     koneksi dbsetting;
     String driver, database, user, pass;
     Object tabel;
-    String nis, nama_siswa, kelas_siswa;
+    String nis, nama_siswa, kelas_siswa, jurusan;
     public static int status;
     
     public frm_sub_piket_siswa() {
@@ -245,27 +245,16 @@ public class frm_sub_piket_siswa extends javax.swing.JFrame {
         nis = tableModel.getValueAt(row, 0).toString();
         nama_siswa = tableModel.getValueAt(row, 1).toString();
         kelas_siswa = tableModel.getValueAt(row, 2).toString();
-        //jurusan = tableModel.getValueAt(row, 3).toString();
-                
-        //data_piket1.setNama_Siswa(nama_siswa);
-        //data_piket1.setKelas_Siswa(kelas_siswa);
+        jurusan = tableModel.getValueAt(row, 3).toString();
         
-        
-
-        /*frm_tambah_piket tambah_piket = new frm_tambah_piket();
-        tambah_piket.setNama_Siswa(nama_siswa);
-        tambah_piket.setKelas_Siswa(kelas_siswa);
-        /*
-        ubah_siswa.setJurusan(jurusan);
-        ubah_siswa.setKelas(kelas);
-        
-        tambah_piket.setVisible(true);
-        */
         if(status == 1){
         frm_tambah_piket.generateSiswa(nis, nama_siswa, kelas_siswa);
         
         }else if(status == 2){
                     frm_sub_ubah_piket.generateSiswa(nis, nama_siswa, kelas_siswa);
+        }else if (status == 3) {
+                    frm_cetak_izin_siswa.generateSiswa(nis, nama_siswa, kelas_siswa, jurusan);
+                    frm_cetak_izin_siswa.btn_cetak.setEnabled(true);
         }
         
         this.setVisible(false);
@@ -316,10 +305,6 @@ public class frm_sub_piket_siswa extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         // TODO add your handling code here:
-        frm_tambah_piket tambah_piket = new frm_tambah_piket();
-        tambah_piket.setVisible(true);
-                
-        this.setVisible(false);
     }//GEN-LAST:event_formWindowClosed
 
     /**

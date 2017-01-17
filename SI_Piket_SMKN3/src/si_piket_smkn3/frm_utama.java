@@ -115,6 +115,7 @@ public class frm_utama extends javax.swing.JFrame {
         jMenuItem_hapus_piket = new javax.swing.JMenuItem();
         jMenuItem_tampil = new javax.swing.JMenuItem();
         jMenuItem_tampil_tanggal = new javax.swing.JMenuItem();
+        jMenuItem_cetak_izin_masukkeluar = new javax.swing.JMenuItem();
         menu_logout = new javax.swing.JMenu();
 
         jMenuItem4.setText("jMenuItem4");
@@ -281,6 +282,14 @@ public class frm_utama extends javax.swing.JFrame {
             }
         });
         menu_piket.add(jMenuItem_tampil_tanggal);
+
+        jMenuItem_cetak_izin_masukkeluar.setText("Cetak Surat Izin Masuk/Keluar Kelas");
+        jMenuItem_cetak_izin_masukkeluar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem_cetak_izin_masukkeluarActionPerformed(evt);
+            }
+        });
+        menu_piket.add(jMenuItem_cetak_izin_masukkeluar);
 
         jMenuBar1.add(menu_piket);
 
@@ -489,6 +498,14 @@ public class frm_utama extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_formWindowClosing
 
+    private void jMenuItem_cetak_izin_masukkeluarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_cetak_izin_masukkeluarActionPerformed
+        // TODO add your handling code here:
+        frm_cetak_izin_siswa.status_login = status_login;
+        frm_cetak_izin_siswa cetak_izin = new frm_cetak_izin_siswa();
+        cetak_izin.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_jMenuItem_cetak_izin_masukkeluarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -543,6 +560,7 @@ public class frm_utama extends javax.swing.JFrame {
     private javax.swing.JMenuBar jMenuBar3;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem4;
+    private javax.swing.JMenuItem jMenuItem_cetak_izin_masukkeluar;
     private javax.swing.JMenuItem jMenuItem_hapus_guru;
     private javax.swing.JMenuItem jMenuItem_hapus_piket;
     private javax.swing.JMenuItem jMenuItem_hapus_siswa;
