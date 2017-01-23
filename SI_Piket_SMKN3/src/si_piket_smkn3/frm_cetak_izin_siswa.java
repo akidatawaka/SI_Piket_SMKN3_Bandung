@@ -11,6 +11,7 @@ import static java.util.Collections.list;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ButtonGroup;
 import javax.swing.JOptionPane;
 import static javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE;
 import net.sf.jasperreports.engine.JasperCompileManager;
@@ -34,9 +35,11 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
     public static String status_login;
     frm_utama utama = new frm_utama();
     String nisnya,nama_siswa,jurusan,kelas;
+    String jam,izin_sweater,alasan;
     
     public frm_cetak_izin_siswa() {
         initComponents();
+        groupButton();
     }
     
     public static void generateSiswa(String nis,String nama,String kelas, String jurusan)
@@ -45,6 +48,14 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
         txt_nama_siswa.setText(nama);
         txt_jurusan.setText(jurusan);
         txt_kelas.setText(kelas);
+        txt_jam.setEnabled(true);     
+    }
+    
+    private void groupButton()
+    {
+        ButtonGroup bg = new ButtonGroup();
+        bg.add(radio_pakai);
+        bg.add(radio_tidakpakai);
     }
 
     /**
@@ -67,12 +78,22 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
         txt_kelas = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        btn_lihat_siswa = new javax.swing.JButton();
-        btn_cetak = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         txt_nis_siswa = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        txt_jam = new javax.swing.JTextField();
+        txt_alasan = new javax.swing.JTextField();
+        radio_pakai = new javax.swing.JRadioButton();
+        radio_tidakpakai = new javax.swing.JRadioButton();
         btn_kembali = new javax.swing.JButton();
+        btn_cetak = new javax.swing.JButton();
+        btn_lihat_siswa = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Cetak Surat Izin Kelas Siswa");
@@ -95,15 +116,15 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
 
         jLabel2.setText("Nama Siswa");
 
-        txt_nama_siswa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_nama_siswa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_nama_siswa.setText("-");
 
-        txt_jurusan.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_jurusan.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_jurusan.setText("-");
 
         jLabel3.setText("Jurusan");
 
-        txt_kelas.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_kelas.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_kelas.setText("-");
 
         jLabel4.setText("Kelas");
@@ -111,48 +132,56 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText(":");
 
-        btn_lihat_siswa.setText("Lihat Data Siswa");
-        btn_lihat_siswa.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_lihat_siswaActionPerformed(evt);
-            }
-        });
-
-        btn_cetak.setText("Cetak Surat Izin Siswa");
-        btn_cetak.setEnabled(false);
-        btn_cetak.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_cetakActionPerformed(evt);
-            }
-        });
-
         jLabel8.setText("NIS");
 
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText(":");
 
-        txt_nis_siswa.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        txt_nis_siswa.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
         txt_nis_siswa.setText("-");
+
+        jLabel10.setText("Masuk/Keluar kelas pada jam pelajaran ke ");
+
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText(":");
+
+        jLabel12.setText("Izin Memakai Sweater");
+
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText(":");
+
+        jLabel14.setText("Alasan");
+
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText(":");
+
+        txt_jam.setEnabled(false);
+
+        radio_pakai.setText("Pakai");
+
+        radio_tidakpakai.setText("Tidak Pakai");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addGap(98, 98, 98)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addGap(60, 60, 60))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(jLabel4))
+                                    .addGap(34, 34, 34)))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jLabel8))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
-                                .addGap(34, 34, 34)))
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -171,25 +200,43 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(txt_jurusan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(59, Short.MAX_VALUE)
-                        .addComponent(btn_lihat_siswa, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel10)
+                            .addComponent(jLabel12)
+                            .addComponent(jLabel14))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btn_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(43, 43, 43))
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txt_jam, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(radio_pakai)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(radio_tidakpakai))
+                                    .addComponent(txt_alasan, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(jLabel9)
                     .addComponent(txt_nis_siswa))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel5)
-                    .addComponent(txt_nama_siswa))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel5)
+                        .addComponent(txt_nama_siswa))
+                    .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
@@ -202,9 +249,23 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
                     .addComponent(txt_kelas))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_lihat_siswa)
-                    .addComponent(btn_cetak))
-                .addGap(21, 21, 21))
+                    .addComponent(jLabel10)
+                    .addComponent(jLabel11)
+                    .addComponent(txt_jam, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel12)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel13)
+                        .addComponent(radio_pakai)
+                        .addComponent(radio_tidakpakai)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(txt_alasan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel14))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         btn_kembali.setBackground(new java.awt.Color(255, 204, 255));
@@ -215,36 +276,56 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
             }
         });
 
+        btn_cetak.setText("Cetak Surat Izin Siswa");
+        btn_cetak.setEnabled(false);
+        btn_cetak.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cetakActionPerformed(evt);
+            }
+        });
+
+        btn_lihat_siswa.setText("Lihat Data Siswa");
+        btn_lihat_siswa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_lihat_siswaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_kembali)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGap(0, 35, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(38, 38, 38))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                                .addComponent(btn_kembali)
-                                .addContainerGap())))))
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(btn_lihat_siswa, javax.swing.GroupLayout.PREFERRED_SIZE, 135, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_cetak, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(117, 117, 117))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(114, 114, 114))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
                 .addComponent(btn_kembali, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cetak)
+                    .addComponent(btn_lihat_siswa, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -287,12 +368,25 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
 
     private void btn_cetakActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cetakActionPerformed
         // TODO add your handling code here:
+        if (txt_jam.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null,"Jam izin belum diisi","Pesan",JOptionPane.ERROR_MESSAGE);
+        } else
+        if (txt_alasan.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Alasan belum diisi","Pesan",JOptionPane.ERROR_MESSAGE);
+        }else{
         try {
             //DefaultTableModel de = (DefaultTableModel) jTable1.getModel();
             nisnya = txt_nis_siswa.getText();
             nama_siswa = txt_nama_siswa.getText();
             jurusan = txt_jurusan.getText();
             kelas = txt_kelas.getText();
+            alasan = txt_alasan.getText();
+            jam = txt_jam.getText();
+            if (radio_pakai.isSelected()) {
+                izin_sweater = "Pakai Sweater";                                
+            } else if (radio_tidakpakai.isSelected()) {
+                izin_sweater = "Tidak Pakai Sweater";
+            }
             String reportSource = "./cetak_izin.jrxml";
 
             
@@ -302,15 +396,18 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
             params.put("nama_siswa", nama_siswa);
             params.put("jurusan", jurusan);
             params.put("kelas", kelas);
+            params.put("jam", jam);
+            params.put("izin_sweater", izin_sweater);
+            params.put("alasan", alasan);
             list.add(params);
             
-            //JRTableModelDataSource datasource = new JRTableModelDataSource(tableModel);
             JRMapCollectionDataSource dataSource = new JRMapCollectionDataSource(list);
             JasperReport jr = JasperCompileManager.compileReport(reportSource);
             JasperPrint jp = JasperFillManager.fillReport(jr, new HashMap(),dataSource);
             JasperViewer.viewReport(jp, false);
         } catch (Exception e) {
             e.printStackTrace();
+        }
         }
     }//GEN-LAST:event_btn_cetakActionPerformed
 
@@ -354,6 +451,12 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
     private javax.swing.JButton btn_kembali;
     private javax.swing.JButton btn_lihat_siswa;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -363,6 +466,10 @@ public class frm_cetak_izin_siswa extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JRadioButton radio_pakai;
+    private javax.swing.JRadioButton radio_tidakpakai;
+    private javax.swing.JTextField txt_alasan;
+    public static javax.swing.JTextField txt_jam;
     public static javax.swing.JLabel txt_jurusan;
     public static javax.swing.JLabel txt_kelas;
     public static javax.swing.JLabel txt_nama_siswa;

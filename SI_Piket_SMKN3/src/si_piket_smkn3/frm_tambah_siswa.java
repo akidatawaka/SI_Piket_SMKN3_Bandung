@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
-import sun.security.action.OpenFileInputStreamAction;
 
 import org.apache.poi.xssf.usermodel.XSSFCell;
 import org.apache.poi.xssf.usermodel.XSSFRow;
@@ -45,6 +44,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
     Vector dataholder;
     
     public static int status;
+    
     
     
     String var_kls_2;
@@ -334,6 +334,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
         
         String var_kls_1, var_kls_3;
         String kelas;
+        nis = txt_nis.getText();
         
         
         
@@ -392,7 +393,9 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
             
             JOptionPane.showMessageDialog(null, "Data Tidak Boleh Kosong, Silahkan Dilengkapi");
         }
-        else {
+        else if(nis.length() < 7) {
+            JOptionPane.showMessageDialog(null, "NIS anda kurang lengkap, Silahkan Dilengkapi");
+        } else{
             try
                 {
                     Class.forName(driver);
@@ -406,7 +409,7 @@ public class frm_tambah_siswa extends javax.swing.JFrame {
                             + "kelas,"
                             + "jurusan)"
                             + "values"
-                            + "( '"+txt_nis.getText()+"',"
+                            + "( '"+nis+"',"
                             + " '"+txt_nama.getText()+"',"
                             + " '"+kelas+"',"                                                      
                             + " '"+jurusan+"')";
